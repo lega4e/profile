@@ -12,6 +12,13 @@ cp ./zshrc_custom    ~/.zshrc_custom
 cp ./i3config        ~/.config/i3/config
 cp ./i3status_config ~/.config/i3status/config
 
+# terminology
+if [ -d ~/.config/terminology ]
+then
+	rm -r ~/.config/terminology
+fi
+cp -r ~/terminology ~/.config/
+
 sudo cp ru                 /usr/share/X11/xkb/symbols
 sudo cp russian-dictor.vim /usr/share/vim/vim81/keymap
 
