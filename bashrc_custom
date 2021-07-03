@@ -1,29 +1,12 @@
 # CUSTOM BUSHRC COMMANDS
 
+. ~/.shrc
 
 
 
 
-export PATH=.:~/.local/bin:/snap/bin:$PATH:~/.cargo/bin
-export PATH_TO_FX=/usr/share/openjfx/lib
-export PATH_TO_FX_MODS=/usr/share/openjfx/jmods
-export RUSTFLAGS="$RUSTFLAGS -A dead_code"
 
-export lib=~/proj/lib
-export lis=~/proj/lib/lis
-export olp=~/proj/mai/olp/term2
-export work=~/work
-export les=~/proj/les
-export git=~/proj/git
-export bin=~/.local/bin
-export vimrc=~/.config/nvim/init.vim
-export vim=~/.config/nvim
-export dawpath=~/.local/daw
-export projtemps=~/.local/initproj
-export fit='std@std-1416.ist.mospolytech.ru'
-
-
-# completions
+# daw completion
 _daw_completion() {
 	COMPREPLY=()
 

@@ -1,4 +1,7 @@
 # ls
+alias please=sudo
+alias pls=sudo
+
 alias l="ls   -v --group-directories-first --color=always"
 alias ls="ls  -v --group-directories-first --color=always"
 alias sl="ls  -v --group-directories-first --color=always"
@@ -12,15 +15,17 @@ alias pud='pushd'
 alias pd='pushd'
 alias pod='popd'
 alias xcc='xclip -sel clip'
+alias ncal='ncal -b'
 
 alias mysql='sudo mysql'
 alias docker='sudo docker'
-alias 'lof'='libreoffice'
+alias lof='libreoffice'
+alias brightness='xrandr --output eDP-1 --brightness'
 
 alias pip='pip3'
 
 # system
-alias sus="systemctl suspend"
+# alias sus="systemctl suspend"
 alias lo="libreoffice"
 alias sysmon="gnome-system-monitor &"
 
@@ -30,11 +35,11 @@ alias py="python3"
 alias disk="yandex-disk"
 alias d="dishead < main.cpp > dmain.cpp"
 alias ds="dishead -s < main.cpp > dmain.cpp"
+alias lndepends='ln `cat target/*.d | tr  t nn | grep nvx | sort -u` ./src/lib/nvx'
 alias jc="jupyter-console"
 alias jn="jupyter-notebook ~/.local/daw/py/jupyter"
 alias ci="cargo init --vcs=none --name 'work'"
 alias cn="cargo init --vcs=none --name"
-alias wrp="sed -e 's/.\+/\"\0\"/g'"
 
 # cd
 alias ..="cd .."
@@ -66,3 +71,4 @@ alias inp="initproj"
 
 # other
 alias ssh_fit='ssh std@std-1416.ist.mospolytech.ru -p 22'
+alias sprinthost='ncftp -u f0555220 -p 0000 f0555220.xsph.ru'

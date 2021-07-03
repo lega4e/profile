@@ -26,16 +26,36 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# add to PATH ~/.bin directory
+if [ -d "$HOME/.bin" ] ; then
+	PATH="$HOME/.bin:$PATH"
+fi
+
+export SHELL="/bin/zsh"
+
 
 
 # my
 # 96 — код клавиши ENTER
 # 1  — код клавиши Escape
 sudo setkeycodes 0x3a 96 0xb8 1
+xset r rate 200 50
 
 
+# touchpad
+synclient MinSpeed=1.1
+synclient MaxSpeed=1.1
+synclient CoastingSpeed=0
+synclient VertScrollDelta=-76
+synclient HorizScrollDelta=-76
+synclient CircularPad=1
+synclient PalmDetect=1
+synclient PalmMinWidth=5
+synclient PalmMinZ=50
 
 
-
-# end
 . "$HOME/.cargo/env"
+
+
+
+# END

@@ -50,6 +50,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ycm-core/YouCompleteMe' " автодополнение
 	" let g:ycm_clangd_binary_path = "/usr/bin/clangd"
 	let g:ycm_global_ycm_extra_conf           = '~/.ycm_extra_conf.py'
+	let g:ycm_confirm_extra_conf              = 0
 	let g:ycm_max_num_candidates              = 50
 	let g:ycm_key_list_select_completion      = [ '<tab>', '<down>', '<c-k>' ]
 	let g:ycm_key_list_previous_completion    = [ '<up>' ]
@@ -137,7 +138,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	nmap <C-f> :FZF<CR>
 
 Plug 'KabbAmine/vCoolor.vim' " color-picker <Alt+c>
-	let g:vcoolor_map = '<C-x>'
+	let g:vcoolor_map = '<C-c>'
 
 Plug 'https://github.com/tpope/vim-repeat'
 Plug 'reconquest/vim-pythonx'
@@ -270,6 +271,7 @@ nnoremap M J
 vnoremap M J
 nnoremap <C-q> :q!<CR>
 nnoremap \| :vnew<CR>
+nnoremap <SPACE> S
 
 " перемещения
 map = $
@@ -339,13 +341,13 @@ au FileType cpp syntax keyword Type byte ubyte ushort uint ulong llong ull ullon
 au FileType cpp syntax keyword Type byte_p ubyte_p short_p ushort_p int_p uint_p
 au FileType cpp syntax keyword Type llong_p ullong_p float_p double_p ldouble_p
 au FileType cpp syntax keyword Type llong_p ullong_p float_p double_p ldouble_p
-au FileType cpp nnoremap <silent> <buffer> <leader>v :!g++ -fsyntax-only %
+au FileType cpp nnoremap <silent> <buffer> <leader>v :!g++ -fsyntax-only %<CR>
 " au FileType cpp syntax keyword Type template typename
 
 au FileType c   syntax keyword Type byte ubyte ushort uint ulong llong ull ullong ldouble id_t
 au FileType c   syntax keyword Type byte_p ubyte_p short_p ushort_p int_p uint_p
 au FileType c   syntax keyword Type llong_p ullong_p float_p double_p ldouble_p
-au FileType c   nnoremap <silent> <buffer> <leader>v :!gcc -fsyntax-only %
+au FileType c   nnoremap <silent> <buffer> <leader>v :!gcc -fsyntax-only %<CR>
 
 
 " PYTHON
@@ -474,9 +476,9 @@ au FileType rust compiler! cargo
 " (      # предложение назад (МОЖНО ПЕРЕНАЗНАЧИТЬ)
 " )      # предложение вперяд (МОЖНО ПЕРЕНАЗНАЧИТЬ)
 " 0      # в начало строке (в самое-самое)
-" -      # k^ (ОПРОБОВАТЬ)
+" -      # USE ^ # k^ (ОПРОБОВАТЬ)
 " _      # ^
-" =      # МОЖНО ПЕРЕНАЗНАЧИТЬ
+" =      # USE $
 " +      # j^ (ОПРОБОВАТЬ)
 
 " ]  # КОМАНДА С ПРОДОЛЖЕНИЕМ
@@ -484,7 +486,7 @@ au FileType rust compiler! cargo
 " }  # параграф назад
 " {  # параграф вперёд
 " \  # старый leader (МОЖНО ПЕРЕНАЗНАЧИТЬ)
-" |  # ??? (МОЖНО ПЕРЕНЗНАЧИТЬ)
+" |  # ???
 " /  # поиск по файлу
 " ?  # поиск по файлу (назад)
 
@@ -501,7 +503,7 @@ au FileType rust compiler! cargo
 " y       # КОМАНДА С ПРОДОЛЖЕНИЕМ (см. отдельно)
 " Y       # скопиротавь текущую строку
 " u       # undo
-" U       # ???
+" U       # МОЖНО ПЕРЕНАЗНАЧИТЬ
 " i       # перейти в режим вставки
 " I       # перейти в режим вставки, переместившись в начало строки
 " o       # перейти в режим вставки, вставить новую строку после
