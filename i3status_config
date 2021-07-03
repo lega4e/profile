@@ -1,0 +1,64 @@
+general {
+	colors    = true
+	interval  = 1
+	separator = ""
+}
+
+order += "battery 0"
+order += "cpu_temperature 0"
+order += "cpu_usage"
+order += "memory"
+order += "load"
+order += "volume master"
+order += "tztime local"
+
+
+
+battery 0 {
+	# format        = "%status %percentage %remaining %emptytime"
+	format        = "%status %percentage %remaining •"
+	format_down   = "No battery •"
+	status_chr    = "CHR"
+	status_bat    = "BUT"
+	status_unk    = "UNK"
+	status_full   = "FULL"
+	path          = "/sys/class/power_supply/BAT%d/uevent"
+	low_threshold = 10
+}
+
+cpu_temperature 0 {
+	separator_block_width = 6
+	format        = "%degrees °C,"
+	max_threshold = 50
+	path          = "/sys/class/thermal/thermal_zone0/temp"
+} 
+
+cpu_usage {
+	format             = "%usage •"
+	degraded_threshold = 40
+}
+
+memory {
+	format = "%used • "
+	format_degraded = "MEMORY: %free •"
+	threshold_degraded = "5%"
+}
+
+load {
+	format = "%5min •"
+}
+
+volume master {
+	format       = "VOL %volume •"
+	format_muted = "VOL %volume •"
+	device       = "default"
+	mixer        = "Master"
+	mixer_idx    = 0
+}
+
+tztime local {
+	format = "%Y.%m.%d %a %H:%M:%S"
+	# hide_if_equals_localtime = true
+}
+
+# END

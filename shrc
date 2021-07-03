@@ -1,0 +1,25 @@
+# CUSTROM COMMANDS FOR BASHRC ANS ZSHRC
+
+
+
+export PATH=.:$PATH
+export PATH_TO_FX=/usr/share/openjfx/lib
+export PATH_TO_FX_MODS=/usr/share/openjfx/jmods
+export RUSTFLAGS="$RUSTFLAGS -A dead_code"
+
+export work=~/work
+export daw=~/.local/daw
+export lib=~/.local/daw/cpp/lib
+export olp=~/.local/daw/cpp/olp
+export les=~/.local/daw/les
+export bin=~/.bin
+export vimrc=~/.config/nvim/init.vim
+export vim=~/.config/nvim
+export inp=~/.local/initproj
+
+export fit='std@std-1416.ist.mospolytech.ru'
+export sph='a0555219@a0555219.xsph.ru'
+
+
+
+# END
