@@ -33,10 +33,16 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# bindsym XF86MonBrightnessUp   exec xbacklight -inc 10
+# bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+
+bindsym XF86MonBrightnessUp   exec light +
+bindsym XF86MonBrightnessDown exec light -
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -158,8 +164,8 @@ mode "resize" {
 		# Pressing up will shrink the window’s height.
 		# Pressing down will grow the window’s height.
 		bindsym h resize shrink width  10 px or 3 ppt
-		bindsym j resize grow   height 10 px or 3 ppt
-		bindsym k resize shrink height 10 px or 3 ppt
+		bindsym j resize shrink height 10 px or 3 ppt
+		bindsym k resize grow   height 10 px or 3 ppt
 		bindsym l resize grow   width  10 px or 3 ppt
 
 		# same bindings, but for the arrow keys
@@ -176,63 +182,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-mode "apps" {
-	bindsym f            exec firefox
-	bindsym $mod+f       exec firefox
-	bindsym $mod+Shift+f exec firefox
 
-	bindsym t            exec term
-	bindsym $mod+t       exec term
-	bindsym $mod+Shift+t exec term
-
-	bindsym n            exec nemo
-	bindsym $mod+n       exec nemo
-	bindsym $mod+Shift+n exec nemo
-
-	bindsym o            exec obsidian
-	bindsym $mod+o       exec obsidian
-	bindsym $mod+Shift+o exec obsidian
-
-	bindsym w            exec libreoffice --writer
-	bindsym $mod+w       exec libreoffice --writer
-	bindsym $mod+Shift+w exec libreoffice --writer
-
-	bindsym m            exec music
-	bindsym $mod+m       exec music
-	bindsym $mod+Shift+m exec music
-
-	bindsym y            exec myteam
-	bindsym $mod+y       exec myteam
-	bindsym $mod+Shift+y exec myteam
-
-	bindsym a            exec WhatsApp
-	bindsym $mod+a       exec WhatsApp
-	bindsym $mod+Shift+a exec WhatsApp
-
-	bindsym u            exec telega
-	bindsym $mod+u       exec telega
-	bindsym $mod+Shift+u exec telega
-
-	bindsym g            exec firefox https://www.desmos.com/calculator?lang=ru
-	bindsym $mod+g       exec firefox https://www.desmos.com/calculator?lang=ru
-	bindsym $mod+Shift+g exec firefox https://www.desmos.com/calculator?lang=ru
-
-	bindsym s            exec megasync
-	bindsym $mod+s       exec megasync
-	bindsym $mod+Shift+s exec megasync
-
-	bindsym Return mode "default"
-	bindsym Escape mode "default"
-}
-
-bindsym $mod+o mode "apps"
-bindsym $mod+Shift+o mode "apps"
-
-# my programs
-bindsym $mod+i      exec cline
-bindsym $alt+F4     kill
-bindsym Ctrl+$alt+a exec flameshot gui
-bindsym $mod+x      exec tpdtgl
 
 title_align center
 
@@ -244,9 +194,83 @@ bar {
 }
 
 
-# workspace_layout default
-# exec term
-# exec firefox 
 
-# workspace_layout tabbed
-# exec nemo
+
+
+########################## CUSTOM ##########################
+bindsym $mod+o       mode "apps"
+bindsym $mod+Shift+o mode "apps"
+
+mode "apps" {
+	bindsym f            exec firefox
+	bindsym $mod+f       exec firefox
+	# bindsym $mod+Shift+f exec firefox
+
+	bindsym t            exec term
+	bindsym $mod+t       exec term
+	# bindsym $mod+Shift+t exec term
+
+	bindsym n            exec nemo
+	bindsym $mod+n       exec nemo
+	# bindsym $mod+Shift+n exec nemo
+
+	bindsym o            exec obsidian
+	bindsym $mod+o       exec obsidian
+	# bindsym $mod+Shift+o exec obsidian
+
+	bindsym w            exec libreoffice --writer
+	bindsym $mod+w       exec libreoffice --writer
+	# bindsym $mod+Shift+w exec libreoffice --writer
+
+	bindsym m            exec music
+	bindsym $mod+m       exec music
+	# bindsym $mod+Shift+m exec music
+
+	bindsym y            exec myteam
+	bindsym $mod+y       exec myteam
+	# bindsym $mod+Shift+y exec myteam
+
+	bindsym a            exec WhatsApp
+	bindsym $mod+a       exec WhatsApp
+	# bindsym $mod+Shift+a exec WhatsApp
+
+	bindsym u            exec telega
+	bindsym $mod+u       exec telega
+	# bindsym $mod+Shift+u exec telega
+
+	bindsym g            exec firefox https://www.desmos.com/calculator?lang=ru
+	bindsym $mod+g       exec firefox https://www.desmos.com/calculator?lang=ru
+	# bindsym $mod+Shift+g exec firefox https://www.desmos.com/calculator?lang=ru
+
+	bindsym s            exec megasync
+	bindsym $mod+s       exec megasync
+	# bindsym $mod+Shift+s exec megasync
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+
+
+# my programs
+bindsym $mod+i      exec cline
+bindsym $alt+F4     kill
+bindsym Ctrl+$alt+a exec flameshot gui
+bindsym $mod+x      exec tpdtgl
+
+
+# kodland
+bindsym Ctrl+$mod+m exec kdmax
+bindsym Ctrl+$mod+p exec kdplay
+bindsym Ctrl+$mod+o exec kdok
+bindsym Ctrl+$mod+i exec kdinp
+
+
+# autoload
+exec clipit
+exec qstardict
+exec megasync
+
+
+
+
+# END
