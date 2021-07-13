@@ -55,7 +55,7 @@ Plug 'ycm-core/YouCompleteMe' " автодополнение
 	let g:ycm_key_list_select_completion      = [ '<tab>', '<down>', '<c-k>' ]
 	let g:ycm_key_list_previous_completion    = [ '<up>' ]
 	let g:ycm_auto_trigger                    = 1
-	let g:ycm_min_num_of_chars_for_completion = 3
+	" let g:ycm_min_num_of_chars_for_completion = 3
 	let g:ycm_show_diagnostics_ui             = 0
 	let g:ycm_enable_diagnostic_signs         = 0
 	let g:ycm_filter_diagnostics              = { "cpp": { "level": "warning" } }
@@ -297,6 +297,7 @@ nnoremap <leader>dh :%!mdtohtml --html4tags <CR>
 nnoremap <leader>dr :e %<CR>
 nnoremap <leader>dy :%y+<CR>
 nnoremap <leader>dm :Man<SPACE>
+nnoremap <leader>dd :!!<CR>
 nnoremap <silent> <leader>ds :set expandtab<CR>:exe "1,$!retab -a t2s -t" . &tabstop<CR>
 nnoremap <silent> <leader>dt :set noexpandtab<CR>:exe "1,$!retab -a s2t -t" . &tabstop<CR>
 vnoremap <silent> <leader>ds :'<,'>!retab t2s<CR>

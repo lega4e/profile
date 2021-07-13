@@ -8,10 +8,10 @@ export PATH_TO_FX_MODS=/usr/share/openjfx/jmods
 export RUSTFLAGS="$RUSTFLAGS -A dead_code"
 
 export work=~/work
+export memo=~/.local/daw/memo
 export daw=~/.local/daw
 export lib=~/.local/daw/cpp/lib
 export olp=~/.local/daw/cpp/olp
-export les=~/.local/daw/les
 export bin=~/.bin
 export vimrc=~/.config/nvim/init.vim
 export vim=~/.config/nvim

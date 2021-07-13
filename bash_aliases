@@ -35,7 +35,7 @@ alias py="python3"
 alias disk="yandex-disk"
 alias d="dishead < main.cpp > dmain.cpp"
 alias ds="dishead -s < main.cpp > dmain.cpp"
-alias lndepends='ln `cat target/*.d | tr  t nn | grep nvx | sort -u` ./src/lib/nvx'
+alias lndepends='ln `cat target/*.d | tr " \t" "\n\n" | grep nvx | sort -u` ./src/lib/nvx'
 alias jc="jupyter-console"
 alias jn="jupyter-notebook ~/.local/daw/py/jupyter"
 alias ci="cargo init --vcs=none --name 'work'"

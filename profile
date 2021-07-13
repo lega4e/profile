@@ -53,6 +53,9 @@ synclient PalmDetect=1
 synclient PalmMinWidth=5
 synclient PalmMinZ=50
 
+feh --bg-scale '/home/lis/imgs/Рабочий стол/Революция, тёмное.jpg'
+light `light`
+
 
 . "$HOME/.cargo/env"
 
