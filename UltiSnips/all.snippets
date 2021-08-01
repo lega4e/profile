@@ -1,0 +1,49 @@
+########################## BASE ############################
+global !p
+import datetime
+
+def getdate():
+	return datetime.datetime.now().strftime("%Y.%m.%d %X")
+
+def isWORDbegin(line, s):
+	line = line[:len(line)-len(s)]
+	return len(line) == 0 or line[-1].isspace()
+
+endglobal
+
+snippet date "date" w
+`!p snip.rv = getdate()`
+endsnippet
+# --------
+
+
+
+snippet j
+{
+	$0
+}
+endsnippet
+# --------
+
+snippet jj "s" w
+{ $1 }$0
+endsnippet
+# --------
+
+
+
+
+
+
+
+######################### SPACES ###########################
+snippet "\d+" "new lines" r
+`!p snip.rv = '\n' * (int(match.group(0)) - 1)`
+endsnippet
+# --------
+
+
+
+
+
+# end

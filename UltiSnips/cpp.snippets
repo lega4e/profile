@@ -1,0 +1,1189 @@
+priority 2
+
+extends c-like-for
+extends c-like-comments
+
+
+
+
+
+
+# -----------------------------------------------
+# directives
+
+snippet ignpr
+#pragma GCC diagnostic ignored "-Wparentheses"
+endsnippet
+# --------
+
+snippet inc
+#include <${1:iostream}>$0
+endsnippet
+# --------
+
+snippet inc<
+#include <${1:iostream}>$0
+endsnippet
+# --------
+
+snippet incc
+#include "$1"$0
+endsnippet
+# --------
+
+snippet ifdeb
+#ifdef DEBUG
+	$1
+#endif$0
+endsnippet
+# --------
+
+snippet ifedeb
+#ifdef DEBUG
+	$1
+#else
+	$2
+#endif$0
+endsnippet
+# --------
+
+snippet guard
+#ifndef $1
+#define $1
+
+
+
+
+
+$0
+
+
+
+
+
+#endif
+endsnippet
+# --------
+
+snippet ponce
+#pragma once
+
+
+
+
+
+$0
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+snippet defname
+#define $1 ($2)
+	$0
+#undef $1
+endsnippet
+# --------
+
+snippet usn
+using namespace ${1:std};$0
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# typedefs
+
+snippet llong
+typedef long long llong;
+endsnippet
+# --------
+
+snippet ullong
+typedef unsigned long long ullong;
+endsnippet
+
+snippet ldouble
+typedef long double ldouble;
+endsnippet
+# --------
+
+
+
+
+
+
+
+# -----------------------------------------------
+# iostreams
+
+snippet co
+cout << $1 << endl;
+endsnippet
+# --------
+
+snippet con
+cout << $1 << '\n';
+endsnippet
+# --------
+
+snippet cob
+cout << "$1" << endl;
+endsnippet
+# --------
+
+snippet conb
+cout << "$1" << '\n';
+endsnippet
+# --------
+
+
+snippet cout
+std::cout << $1 << std::endl;$0
+endsnippet
+# --------
+
+snippet coutb
+std::cout << "$1" << std::endl;$0
+endsnippet
+# --------
+
+
+snippet term
+std::cout << "-----------------------------------" << std::endl;
+endsnippet
+# --------
+
+snippet termn
+std::cout << "-----------------------------------\n" << std::endl;
+endsnippet
+# --------
+
+
+snippet cerr
+std::cerr << $1 << std::endl;$0
+endsnippet
+# --------
+
+snippet cerrb
+std::cerr << "$1" << std::endl;$0
+endsnippet
+# --------
+
+snippet prv
+cout << "${1/(.*)_/$1/}: " << $1 << endl;$0
+endsnippet
+# --------
+
+snippet prvar
+std::cout << "${1/(.*)_/$1/}: " << $1 << std::endl;$0
+endsnippet
+# --------
+
+
+snippet begreport
+std::ofstream("report");
+endsnippet
+# --------
+
+snippet report
+{
+	std::ofstream fout("report", std::ofstream::app);
+	fout << $1 << std::endl;
+	fout.close();
+}$0
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# c-streams
+
+snippet fopen
+auto file = fopen(${1:INPUT_FILE_NAME}, "${2:r}");
+endsnippet
+# --------
+
+snippet fopenr
+auto file = fopen(${1:INPUT_FILE_NAME}, "${2:r}");
+endsnippet
+# --------
+
+snippet fopenw
+auto file = fopen(${1:OUTPUT_FILE_NAME}, "${2:w}");
+endsnippet
+# --------
+
+snippet fl
+fflush({${1:stdout});$0
+endsnippet
+# --------
+
+snippet sfl
+fflush(stdout);$0
+endsnippet
+# --------
+
+snippet pr
+printf("$1"$2);$0
+endsnippet
+# --------
+
+snippet prn
+printf("$1\n"$2);$0
+endsnippet
+# --------
+
+snippet epr
+fprintf(stderr, "$1"$2);$0
+endsnippet
+# --------
+
+snippet eprn
+fprintf(stderr, "$1\n"$2);$0
+endsnippet
+# --------
+
+snippet prarr
+printf("$1: ");
+for (auto *b = $1, *e = $1+$2; b != e; ++b)
+	printf("%${3:i} ", *b);
+printf("\n");$0
+endsnippet
+# --------
+
+snippet prbe
+printf("$1: ");
+for (auto b = $1cbegin(), e = $1cend(); b != e; ++b)
+	printf("%${3:i} ", *b);
+printf("\n");$0
+endsnippet
+# --------
+
+
+snippet sc
+scanf("%$1", $2);$0
+endsnippet
+# --------
+
+snippet scn
+scanf("%i", &n);$0
+endsnippet
+# --------
+
+snippet scarr
+for (auto b = ${1:a}, e = $1+${2:n}; b != e; ++b)
+	scanf("%${3:i}", b);
+endsnippet
+# --------
+
+
+snippet cinput
+{
+	auto file = fopen(${1:INPUT_FILE_NAME}, "r");
+	$0
+	fclose(file);
+}
+endsnippet
+# --------
+
+snippet cinputc
+// input
+{
+	auto file = fopen(${1:INPUT_FILE_NAME}, "r");
+	$0
+	fclose(file);
+}
+endsnippet
+# --------
+
+snippet coutput
+{
+	auto file = fopen(${1:OUTPUT_FILE_NAME}, "w");
+	$0
+	fclose(file);
+}
+endsnippet
+# --------
+
+snippet coutputc
+// output
+{
+	auto file = fopen(${1:OUTPUT_FILE_NAME}, "w");
+	$0
+	fclose(file);
+}
+endsnippet
+# --------
+
+
+
+snippet begrep
+fclose( fopen("report", "w") );$0
+endsnippet
+# --------
+
+snippet rep
+{
+	auto file = fopen("report", "a");
+	fprintf(file, "$1\n"$2);
+	fclose(file);
+}
+endsnippet
+# --------
+
+
+
+
+
+
+
+# -----------------------------------------------
+# struct
+
+snippet sct
+struct $1
+{
+	$0
+};
+endsnippet
+# --------
+
+snippet cls
+class $1
+{
+public:
+	$0
+
+
+
+};
+endsnippet
+# --------
+
+
+
+# -----------------------------------------------
+# functions
+
+snippet f
+${1:void }$2( ${3:void} )
+{
+	$0
+}
+endsnippet
+# --------
+
+snippet main
+int main( int argc, char *argv[] )
+{
+	$0
+	return 0;
+}
+endsnippet
+# --------
+
+snippet printfun
+template<class Ostream>
+inline Ostream &operator<<( Ostream &os, $1 const &toprint )
+{
+	toprint.print(os);
+	return os;
+}$0
+endsnippet
+# --------
+
+snippet scanfun
+template<class Istream>
+inline Istream &operator>>( Istream &is, $1 &toscan )
+{
+	toscan.scan(is);
+	return is;
+}$0
+endsnippet
+# --------
+
+snippet mv
+std::move($0
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# methods
+
+snippet printmtd
+template<class Ostream>
+Ostream &print( Ostream &os ) const
+{
+	$0
+	return os;
+}
+endsnippet
+# --------
+
+snippet scanmtd
+template<class Istream>
+Istream &scan( Istream &is )
+{
+	$0
+	return is;
+}
+endsnippet
+# --------
+
+snippet setget
+$1 &$2($3 $4);
+$3 $2() const;
+endsnippet
+# --------
+
+snippet setgetcr
+$1 &$2($3 $4);
+$3 const &$2() const;
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# members
+
+snippet defmem
+static $1 const DEFAULT;$0
+endsnippet
+# --------
+
+snippet defmemdef
+$1 const $1::DEFAULT = {
+	$2
+};$0
+endsnippet
+# --------
+
+snippet scmem
+static constexpr $1 const$0
+endsnippet
+# --------
+
+snippet squareoff
+static constexpr PointI const OFFSET[4] = {
+	{ 1, 0 }, { -1, 0 },
+	{ 0, 1 }, { 0, -1 }
+};
+endsnippet
+# --------
+
+snippet hourseoff
+static constexpr PointI const OFFSET[8] = {
+	{ 1, 2 },
+	{ 1, -2 },
+	{ -1, 2 },
+	{ -1, -2 },
+	{ 2, 1 },
+	{ 2, -1 },
+	{ -2, 1 },
+	{ -2, -1 }
+};
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# iterators
+
+
+snippet be "begin, end" w
+$1begin(), $1end()$0
+endsnippet
+# --------
+
+snippet cbe "cbegin, cend" w
+$1cbegin(), $1cend()$0
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# algorithms
+
+
+snippet copy
+std::copy($1cbegin(), $1cend(), $2);$0
+endsnippet
+# --------
+
+snippet copyp
+std::copy($1, $2, $3);$0
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# types
+
+snippet ll
+long long$0
+endsnippet
+# --------
+
+snippet cp
+const *$0
+endsnippet
+# --------
+
+snippet str
+std::string$0
+endsnippet
+# --------
+
+snippet vec
+std::vector<${1:int}>$0
+endsnippet
+# --------
+
+snippet pair
+std::pair<${1:int, int}>$0
+endsnippet
+# --------
+
+snippet list
+std::list<${1:int}>$0
+endsnippet
+# --------
+
+snippet sptr
+std::shared_ptr<$1>$0
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# templates
+
+
+snippet t
+template<${1:typename} ${2:T}>$0
+endsnippet
+# --------
+
+snippet t2
+template<typename T, typename U>$0
+endsnippet
+# --------
+
+snippet t3
+template<typename T, typename U, typename V>$0
+endsnippet
+# --------
+
+snippet IF
+template<bool value, typename T, typename U> struct IF
+{
+	typedef T type;
+};
+template<typename T, typename U> struct IF<false, T, U>
+{
+	typedef U type;
+};
+endsnippet
+# --------
+
+snippet argument_type
+typedef typename IF<
+	std::is_fundamental<
+		typename std::remove_pointer< value_type >::type
+	>::value,
+	value_type,
+	typename std::add_lvalue_reference<
+		typename std::add_const< value_type >::type
+	>::type
+>::type argument_type;
+endsnippet
+# --------
+
+snippet result_type
+typedef decltype(T()*U()) result_type;
+endsnippet
+# --------
+
+
+
+
+
+snippet range
+for (auto i : $1)$0
+endsnippet
+# --------
+
+snippet ranger
+for (auto &i : $1)$0
+endsnippet
+# --------
+
+snippet rangecr
+for (auto const &i : $1)$0
+endsnippet
+# --------
+
+
+snippet forbe
+for (auto b = $1begin(), e = $1end(); b != e; ++b)$0
+endsnippet
+# --------
+
+snippet forbex
+for (auto $2 = $1begin(), $3 = $1end(); $2 != $3; ++$2)$0
+endsnippet
+# --------
+
+snippet forcbe
+for (auto b = $1cbegin(), e = $1cend(); b != e; ++b)$0
+endsnippet
+# --------
+
+snippet forbbee
+for (auto bb = $1begin(), ee = $1end(); bb != ee; ++bb)$0
+endsnippet
+# --------
+
+snippet forpb
+for (auto *b = $1; b != $1+$2; ++b)$0
+endsnippet
+# --------
+
+snippet forpbe
+for (auto *b = $1, *e = $1+$2; b != e; ++b)$0
+endsnippet
+# --------
+
+snippet forcpbe
+for (auto const *b = $1, *e = $1+$2; b != e; ++b)$0
+endsnippet
+# --------
+
+
+
+
+
+
+
+# -----------------------------------------------
+# try catch
+
+
+snippet try
+try
+{
+	$3
+}
+catch(${1:std::exception const &e})
+{
+	std::cerr << $2 << std::endl;
+}$0
+endsnippet
+# --------
+
+
+
+
+
+
+
+# -----------------------------------------------
+# code templates
+
+snippet default_template
+#include <iostream>
+
+
+using namespace std;
+
+
+
+
+
+// main
+int main( int argc, char *argv[] )
+{
+	$0
+
+
+
+	return 0;
+}
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+
+snippet fstream_template
+#include <iostream>
+#include <fstream>
+
+
+using namespace std;
+
+
+
+
+
+// objects
+char const *INPUT_FILE_NAME = "INPUT.TXT";
+char const *OUTPUT_FILE_NAME = "OUTPUT.TXT";
+
+
+
+
+
+// main
+int main( int argc, char *argv[] )
+{
+	$0
+
+
+
+	return 0;
+}
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+
+snippet c_template
+#include <cstdio>
+
+
+using namespace std;
+
+
+
+
+
+// main
+int main( int argc, char *argv[] )
+{
+	$0
+
+	return 0;
+}
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+
+snippet c_fstream_template
+#include <cstdio>
+
+
+using namespace std;
+
+
+
+
+
+// objects
+constexpr char const *INPUT_FILE_NAME = "INPUT.TXT";
+constexpr char const *OUTPUT_FILE_NAME = "OUTPUT.TXT";
+
+
+
+
+
+// main
+int main( int argc, char *argv[] )
+{
+	$0
+
+	return 0;
+}
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+
+snippet sfml_template
+#include <iostream>
+
+#include <SFML/Graphics.hpp>
+
+
+using namespace sf;
+using namespace std;
+
+
+
+
+
+// global objects
+RenderWindow window;
+VideoMode vmode = VideoMode::getDesktopMode();
+char const *TITLE = "Application";
+unsigned int FRAMERATE_LIMIT = 60u;
+
+
+
+
+
+// init
+void init_window()
+{
+	window.create(vmode, TITLE, Style::None);
+	window.setPosition({0u, 0u});
+	window.setFramerateLimit(FRAMERATE_LIMIT);
+	return;
+}
+
+
+
+
+
+// main
+int main( int argc, char *argv[] )
+{
+	init_window();
+
+	$0
+
+	Event event;
+	while(window.isOpen())
+	{
+		while(window.pollEvent(event))
+		{
+
+			switch(event.type)
+			{
+			case Event::KeyPressed:
+
+				switch(event.key.code)
+				{
+				case Keyboard::C:
+					window.close();
+					break;
+				default:
+					break;
+				}
+				break;
+
+			default:
+				break;
+			}
+
+		}
+
+		window.clear(Color::White);
+		
+		window.display();
+	}
+
+	return 0;
+}
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+
+
+snippet nvxhpp_template
+#ifndef NVX_$1
+#define NVX_$1
+
+
+
+
+
+namespace nvx
+{
+
+
+
+
+
+$0
+
+
+
+
+
+}
+
+
+
+
+
+#endif
+endsnippet
+# --------
+
+
+
+snippet nvxcpp_template
+#include "$1"
+
+
+
+
+
+namespace nvx
+{
+
+
+
+
+
+$0
+
+
+
+
+
+}
+
+
+
+
+
+// end
+endsnippet
+
+
+
+
+
+snippet class_description
+/*
+ * Договорённости
+ *    *
+ *
+ *
+ *
+ * Обозначения
+ *    *
+ *
+ *
+ *
+ *
+ *
+ * ----- СОЗДАНИЕ, КОНВЕРТАЦИЯ
+ * Методы
+ *    *
+ *
+ * Свободные функции
+ *    *
+ *
+ *
+ *
+ *
+ *
+ * ----- МЕТОДЫ
+ *    *
+ *
+ *
+ *
+ *
+ *
+ * ----- ОПЕРАТОРЫ
+ *    * Немодифицирующие
+ *        -
+ *    * Модифицирующие
+ *        -
+ *
+ *
+ *
+ *
+ *
+ * ----- СВОЙСТВА
+ *    * 
+ *
+ *
+ *
+ *
+ *
+ * ----- ДРУГОЕ
+ *    * operator<<.....выводит в поток 
+ *
+ *
+ *
+ *
+ *
+ */
+endsnippet
+
+
+
+
+
+snippet clear
+std::system("clear");
+endsnippet
+# --------
+
+snippet lrhs "lhs and rhs" w
+$1 const &lhs, $1 const &rhs$0
+endsnippet
+# --------
+
+
+
+
+
+########################### OLP ############################
+snippet olp_template
+#include <iostream>
+#include <vector>
+
+
+using namespace std;
+
+
+
+
+
+// types
+typedef long long llong;
+
+
+
+
+
+// functions
+template<typename T>
+T next()
+{
+	T t;
+	cin >> t;
+	return t;
+}
+
+auto nxti = next<int>;
+auto nxtll = next<llong>;
+
+
+
+
+
+// main
+int main( int argc, char *argv[] )
+{
+	$0
+
+
+	return 0;
+}
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+snippet testc
+int testc = nxti();
+int n;
+
+for (int test = 0; test < testc; ++test)
+{
+	n = nxti();
+
+	$0
+}
+endsnippet
+# --------
+
+snippet testcf
+for (int testc = nxti(), test = 0; test < testc; ++test)
+{
+	nxti();
+
+	$0
+}
+endsnippet
+# --------
+
+
+
+
+
+######################## LAMBDA ############################
+snippet sfun
+struct F { static ${1:void} f($2)
+{
+	$0
+}};
+endsnippet
+# --------
+
+snippet llambda
+[$1]($2)->${3:void} {
+	$0
+}
+endsnippet
+# --------
+
+snippet lambda
+[$1]($2)->${3:void}
+{
+	$0
+}
+endsnippet
+# --------
+
+
+snippet lamsh
+[$1]($2) { $3; }$0
+endsnippet
+# --------

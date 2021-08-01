@@ -1,0 +1,6 @@
+snippet ctags
+!if [ -f .ctags ]; then rm .ctags; fi
+!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q -o .ctags
+:set tags+=.ctags
+endsnippet
+# --------

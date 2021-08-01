@@ -1,0 +1,274 @@
+# -------------------------------------------
+
+global !p
+import datetime
+
+def getdate():
+	return datetime.datetime.ctime(
+		datetime.datetime.now()
+	)[4:];
+endglobal
+# -------
+
+snippet date
+`!p snip.rv = getdate()`
+endsnippet
+# --------
+
+snippet autor
+/*
+ * autor:    lis
+ * created:  `!p snip.rv = getdate()`
+ */
+endsnippet
+# --------
+
+
+snippet use
+"use strict"
+endsnippet
+# --------
+
+
+snippet cs
+/*
+ * $0
+ */
+endsnippet
+# --------
+
+snippet хи
+/*
+ * $0
+ */
+endsnippet
+# --------
+
+snippet с
+//
+endsnippet
+# --------
+
+
+
+
+# -------------------------------------------
+# functions
+
+snippet term
+print('-----------------------------');
+endsnippet 
+# --------
+
+
+
+
+# -------------------------------------------
+# for
+
+snippet fori
+for(let i = 0; i < $1; ++i)$0 
+endsnippet
+# --------
+
+snippet foril
+for(let i = 0; i < ${1:e}.length; ++i)$0
+endsnippet
+# --------
+
+snippet forin
+for(let i in $1)$0
+endsnippet
+# --------
+
+snippet forj
+for(let j = 0; j < ${1:10}; ++j)$0
+endsnippet
+# --------
+
+snippet fork
+for(let k = 0; k < ${1:10}; ++k)$0
+endsnippet
+# --------
+
+snippet forx
+for(let x = 0; x < ${1:10}; ++x)$0
+endsnippet
+# --------
+
+snippet fory
+for(let y = 0; y < ${1:10}; ++y)$0
+endsnippet
+# --------
+
+snippet forxy
+for(let x = 0; x < ${1:10}; ++x)
+for(let y = 0; y < ${2:10}; ++y)$0
+endsnippet
+# --------
+
+snippet foryx
+for(let y = 0; y < ${1:10}; ++y)
+for(let x = 0; x < ${2:10}; ++x)$0
+endsnippet
+# --------
+
+# -------------------------------------------
+# HTML
+
+snippet d
+document$0
+endsnippet
+# --------
+
+snippet gbi
+${1:document}.getElementById('$2');$0
+endsnippet
+# --------
+
+snippet gbt
+${1:document}.getElementsByTagName('$2');$0
+endsnippet
+# --------
+
+snippet px
++ 'px';$0
+endsnippet
+# --------
+
+snippet al
+alert("${1:1}");$0
+endsnippet
+# --------
+
+
+
+
+# -------------------------------------------
+# jQuery
+
+snippet $
+$('$1').$0
+endsnippet
+# --------
+
+
+
+
+
+# -------------------- OTHER -----------------------
+snippet j
+{
+	$0
+}
+endsnippet
+# --------
+
+snippet jj
+{ $1 }$0
+endsnippet
+# --------
+
+snippet ex
+/* EX $1 */
+function ex$2()
+{
+	$0
+}
+
+
+ex$2();
+endsnippet
+# --------
+
+
+# ------------- SPACES
+snippet 3
+
+
+
+endsnippet
+# --------
+
+snippet 3c
+
+
+
+// $1
+$0
+endsnippet
+# --------
+
+snippet 4
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 5
+
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 5c
+
+
+
+
+
+// $1
+$0
+endsnippet
+# --------
+
+snippet 6
+
+
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 7
+
+
+
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 7c
+
+
+
+
+
+
+
+// $1
+$0
+endsnippet
+# --------
+
+snippet 8
+
+
+
+
+
+
+
+$0
+endsnippet
+# --------

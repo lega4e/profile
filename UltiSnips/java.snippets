@@ -1,0 +1,273 @@
+# -----------------------------------------------
+# date, autor
+
+global !p
+import datetime
+
+def getdate():
+	return datetime.datetime.ctime(
+		datetime.datetime.now()
+	)[4:];
+endglobal
+# -------
+
+snippet date
+`!p snip.rv = getdate()`
+endsnippet
+# --------
+
+snippet autor
+/*
+ * autor:   lis
+ * date:    `!p snip.rv = getdate()`
+ */
+endsnippet
+
+snippet cs
+/*
+ * $0
+ */
+endsnippet
+
+snippet хи
+/*
+ * $0
+ */
+endsnippet
+
+snippet с
+//
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# struct
+
+snippet sct
+struct $1
+{
+	$0
+};
+endsnippet
+# --------
+
+snippet cls
+class $1
+{
+public:
+	$0
+
+
+
+};
+endsnippet
+# --------
+
+
+
+
+
+# ----------------------------------------------
+# cycles
+snippet for
+for(int $1 = 0; $1 < $2; ++$1)$0
+endsnippet
+# --------
+
+snippet fori
+for(int i = 0; i < ${1:10}; ++i)$0
+endsnippet
+# --------
+
+snippet forj
+for(int j = 0; j < ${1:10}; ++j)$0
+endsnippet
+# --------
+
+snippet fork
+for(int k = 0; k < ${1:10}; ++k)$0
+endsnippet
+# --------
+
+snippet forx
+for(int x = 0; x < ${1:10}; ++x)$0
+endsnippet
+# --------
+
+snippet fory
+for(int y = 0; y < ${1:10}; ++y)$0
+endsnippet
+# --------
+
+snippet forxy
+for(int x = 0; x < ${1:10}; ++x)
+for(int y = 0; y < ${2:10}; ++y)$0
+endsnippet
+# --------
+
+snippet foryx
+for(int y = 0; y < ${1:10}; ++y)
+for(int x = 0; x < ${2:10}; ++x)$0
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# code templates
+
+snippet default_template
+import static java.lang.Math.*;
+import static java.lang.System.*;
+
+import java.util.Scanner;
+
+
+
+
+
+class Main
+{
+	static Scanner in = new Scanner(System.in);
+
+	public static void main(String[] args)
+	{
+
+
+		return;
+	}
+}
+
+
+
+
+
+// end
+endsnippet
+# --------
+
+
+
+
+
+# -----------------------------------------------
+# other
+
+snippet j
+{
+	$0
+}
+endsnippet
+# --------
+
+snippet jj
+{ $1 }$0
+endsnippet
+# --------
+
+snippet b
+"$1"$0
+endsnippet
+# --------
+
+
+snippet 3
+
+
+
+endsnippet
+# --------
+
+snippet 3c
+
+
+
+// $1
+$0
+endsnippet
+# --------
+
+snippet 4
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 5
+
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 5c
+
+
+
+
+
+// $1
+$0
+endsnippet
+# --------
+
+snippet 6
+
+
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 7
+
+
+
+
+
+
+$0
+endsnippet
+# --------
+
+snippet 7c
+
+
+
+
+
+
+
+// $1
+$0
+endsnippet
+# --------
+
+snippet 8
+
+
+
+
+
+
+
+$0
+endsnippet
+# --------
+
+
+
+
+

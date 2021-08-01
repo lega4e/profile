@@ -1,0 +1,47 @@
+####################### C-LIKE FOR #########################
+priority 1
+
+
+
+
+
+snippet "for (\w)" "for" rb
+for (int `!p snip.rv = match.group(1)` = 0; `!p snip.rv = match.group(1)` < ${1:10}; ++`!p snip.rv = match.group(1)`)$0
+endsnippet
+# --------
+
+snippet "fore (\w)" "for with end" rb
+for (int `!p snip.rv = match.group(1)` = 0, e = $1; `!p snip.rv = match.group(1)` != e; ++`!p snip.rv = match.group(1)`)$0
+endsnippet
+# -------
+
+snippet "for (\w)(\w)" "double for" rb
+for (int `!p snip.rv = match.group(1)` = 0; `!p snip.rv = match.group(1)` < ${1:10}; ++`!p snip.rv = match.group(1)`)
+for (int `!p snip.rv = match.group(2)` = 0; `!p snip.rv = match.group(2)` < ${2:10}; ++`!p snip.rv = match.group(2)`)$0
+endsnippet
+# --------
+
+snippet "forp (\w+)" "for with pointers" rb
+for (${1:int} *`!p snip.rv = match.group(1)` = $2, *e = $2+$3; `!p snip.rv = match.group(1)` != e; ++`!p snip.rv = match.group(1)`)$0
+endsnippet
+# --------
+
+snippet "forp (\w+) (\w+)" "for with pointers (with end)" rb
+for (${1:int} *`!p snip.rv = match.group(1)` = $2, *`!p snip.rv = match.group(2)` = $2+$3; `!p snip.rv = match.group(1)` != `!p snip.rv = match.group(2)`; ++`!p snip.rv = match.group(1)`)$0
+endsnippet
+# --------
+
+snippet forpbe
+for (${1:int} *b = $2, *e = $2+$3; b != e; ++b)$0
+endsnippet
+
+snippet forpbb
+for (${1:int} *bb = $2, *ee = $2+$3; bb != ee; ++bb)$0
+endsnippet
+# --------
+
+
+
+
+
+# END

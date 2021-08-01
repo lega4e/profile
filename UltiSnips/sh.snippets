@@ -1,0 +1,26 @@
+extends script-comments
+
+snippet f
+"$$1"$0
+endsnippet
+# --------
+
+snippet error
+1>&2 echo -e "\e[31mError: $1\e[0m"$0
+endsnippet
+# --------
+
+snippet if
+if [ $1 ]
+then
+	$0
+fi
+endsnippet
+# --------
+
+snippet j
+{
+	$0
+}
+endsnippet
+# --------

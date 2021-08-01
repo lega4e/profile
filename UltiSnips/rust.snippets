@@ -1,0 +1,80 @@
+extends c-like-comments
+
+
+
+
+
+# ------------------------- CONTROLS -------------------------
+snippet mres
+match $1 {
+	Ok(ok)   => ${2:ok},
+	Err(err) => ${3:panic!("Error: \{:?\}", err)},
+}$0
+endsnippet
+# --------
+
+
+
+
+
+# --------------------- INPUT-OUTPUT -------------------------
+snippet prn
+println!("$1"$2);$0
+endsnippet
+# --------
+
+snippet eprn
+eprintln!("$1"$2);$0
+endsnippet
+# --------
+
+
+
+
+
+# ----------------------- TEMPLATES --------------------------
+snippet default_template
+/* BEGIN */
+
+
+
+
+
+fn main()
+{
+	$0
+
+
+	return;
+}
+
+
+
+
+
+/* END */
+endsnippet
+# --------
+
+snippet BEG
+/* BEGIN */
+
+
+
+
+
+$0
+
+
+
+
+
+/* END */
+endsnippet
+# --------
+
+
+
+
+
+# END

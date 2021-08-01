@@ -1,0 +1,48 @@
+####################### SCRIPT COMMENTS ####################
+
+global !p
+
+def isWORDbegin(line, s):
+	if not isinstance(s, int):
+		s = len(s)
+	line = line[:len(line)-s]
+	return len(line) == 0 or line[-1].isspace()
+
+endglobal
+
+
+
+
+
+snippet "c|х" "one line comment" "isWORDbegin(snip.buffer[snip.line-1], 1)" re
+# $0
+endsnippet
+# --------
+
+snippet "(fc|ох) ((\w+\s*)+)" "fat comment" rb
+`!p
+c = 60 - 2 - len(match.group(2))
+snip.rv = '#' * (c - c//2) + ' ' + match.group(2).upper() + ' ' + '#' * (c//2)
+`
+endsnippet
+
+snippet author
+#
+# author:   nvx
+# created: `!p snip.rv = getdate()`
+#
+endsnippet
+# --------
+
+snippet "(\d+)(c|х)" "desc" rb
+`!p snip.rv = '\n' * (int(match.group(1)) - 1)`
+# $1
+$0
+endsnippet
+# --------
+
+
+
+
+
+# END

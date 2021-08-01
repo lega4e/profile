@@ -1,0 +1,151 @@
+# ------------------------------------------
+snippet default_template
+cflags  := -std=gnu++17 -c -Wall
+ldflags :=
+libs    :=
+
+
+
+
+
+# main
+build: main
+
+run: main
+	main 
+
+
+re: clean build
+
+rerun: clean run
+
+
+source_dirs     := src
+header_dirs     := src/lib
+search_wildcard := $(wildcard $(addsuffix /*.cpp,$(source_dirs)))
+object_files    := $(patsubst %.cpp,%.o,$(search_wildcard))
+object_files    := $(notdir $(object_files))
+object_files    := $(addprefix target/,$(object_files))
+VPATH           := $(source_dirs)
+
+main: ./target $(object_files)
+	g++ $(ldflags) -o $@ $(object_files) $(libs)
+
+./target:
+	if ! [ -d ./target ]; then mkdir target; fi
+
+target/%.o: %.cpp
+	g++ $(cflags) -o $@ -MD $(addprefix -I,$(header_dirs)) $<
+
+include $(wildcard target/*.d)
+
+
+
+# clean
+clean:
+	-rm -r target main
+
+
+
+
+
+# end
+endsnippet
+# --------
+
+
+
+snippet c_template
+main: main.c
+	gcc -o main main.c -Wall
+
+run: main
+	main
+
+clean:
+	rm main 
+
+rerun: clean run
+endsnippet
+# --------
+
+
+
+snippet tinixml_template
+all: main
+
+run: all
+	main
+
+main: main.o tinyxml.o tinystr.o tinyxmlerror.o tinyxmlparser.o
+	g++ -o main main.o tinyxml.o tinystr.o tinyxmlerror.o tinyxmlparser.o
+
+main.o: main.cpp
+	g++ -c main.cpp 
+
+tinyxml.o: tinyxml.cpp
+	g++ -c tinyxml.cpp
+
+tinystr.o: tinystr.cpp
+	g++ -c tinystr.cpp
+
+tinyxmlerror.o: tinyxmlerror.cpp
+	g++ -c tinyxmlerror.cpp
+
+tinyxmlparser.o: tinyxmlparser.cpp
+	g++ -c tinyxmlparser.cpp
+
+
+
+
+
+# end
+endsnippet
+# --------
+
+
+
+snippet py
+run:
+	python3 main.py
+endsnippet
+# --------
+
+
+
+snippet py_
+run:
+	python3 main.py
+endsnippet
+# --------
+
+
+
+snippet html
+run:
+	firefox index.html
+endsnippet
+# --------
+
+
+
+snippet note
+$1: ${1/(\w+).*/$1.cpp/} ${1/(\w+).*/$1.hpp/}
+	g++ $(CFLAGS) -o $1 ${1/(\w+).*/$1.cpp/}
+$0
+endsnippet
+# --------
+
+
+
+snippet sfml
+-lsfml-graphics -lsfml-system -lsfml-window$0
+endsnippet 
+# --------
+
+
+
+snippet p
+$($1)$0
+endsnippet
+# --------
