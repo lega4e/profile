@@ -71,4 +71,4 @@ alias inp="initproj"
 
 # other
 alias ssh_fit='ssh std@std-1416.ist.mospolytech.ru -p 22'
-alias sprinthost='ncftp -u f0555220 -p 0000 f0555220.xsph.ru'
+alias sprinthost='ssh a0566996@a0566996.xsph.ru'

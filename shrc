@@ -18,10 +18,10 @@ export vim=~/.config/nvim
 export inp=~/.local/initproj
 
 export fit='std@std-1416.ist.mospolytech.ru'
-export sph='a0555219@a0555219.xsph.ru'
- 
- 
- 
+export sph='a0566996@a0566996.xsph.ru'
+
+
+
 # daw completion
 _daw_completion() {
 	COMPREPLY=()
@@ -39,7 +39,7 @@ _daw_completion() {
 			for arg in $targs
 			do
 				dir=`expr $arg : "$HOME\/\.local\/daw\/\(.*\)$"`
-				args+="$dir/ " 
+				args+="$dir/ "
 			done
 		else
 			targs=`find "$HOME/.local/daw/" -maxdepth 1 -mindepth 1 -type d`
