@@ -9,9 +9,19 @@ function! Switch()
 	endif
 endfunction
 
+fun! <SID>StripTrailingWhitespaces()
+	let l = line(".")
+	let c = col(".")
+	%s/\s\+$//e
+	call cursor(l, c)
+	write
+endfun
+
+autocmd BufWrite <buffer> :call <SID>StripTrailingWhitespaces()
+
 let g:mapleader=','
 
-set autoindent 
+set autoindent
 set autoread	" автоматически загружать внешние изменения файла
 " set list " отображать симоволы табуляции
 set nocompatible
@@ -83,7 +93,21 @@ Plug 'ycm-core/YouCompleteMe' " автодополнение
 		  " \ coc#refresh()
 
 Plug 'scrooloose/nerdcommenter' " комментирование
-	let g:NERDSpaceDelims = 2
+	let g:NERDSpaceDelims     = 2
+	let g:NERDTreeAutoCenter  = 0
+	let g:NERDTreeMinimalMenu = 1
+	let g:NERDTreeMinimalUI   = 1
+	let g:NERDTreeMouseMode   = 1
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+
 
 Plug 'SirVer/ultisnips' " сниппеты
 	let g:UltiSnipsExpandTrigger="<c-j>"
@@ -93,7 +117,7 @@ Plug 'SirVer/ultisnips' " сниппеты
 
 Plug 'https://github.com/vim-scripts/highlight_current_line.vim'
 
-Plug 'scrooloose/nerdtree' " просмотр файловой системы 
+Plug 'scrooloose/nerdtree' " просмотр файловой системы
 	map <C-n> :NERDTreeToggle<CR>
 
 " Plug 'jistr/vim-nerdtree-tabs'
@@ -153,7 +177,7 @@ Plug 'junegunn/vim-easy-align' " выравнивание
 	" gaip**,   # выравнивать сначала по левому краю, потом по правому,
 	"             чередовать
 	" gaip*^X   # выровнять по регулярному выражению
-	" ..^L      # левый отступ 
+	" ..^L      # левый отступ
 	" ..^R      # правый отступ
 	" ..<ENTER> # изменить тип выравнивание (влево, по центру, вправо)
 	" ..<C-P>   # показывать выравнивание в настоящем времени
@@ -200,7 +224,7 @@ Plug 'jupyter-vim/jupyter-vim'
 	let g:python3_host_prog = '/usr/bin/python3'
 	let g:jupyter_mapkeys   = 0
 	" Run current file
-	au FileType python map <silent> <buffer> <leader>r :JupyterRunFile<CR>
+	au FileType python map <silent> <buffer> <leader>o :JupyterRunFile<CR>
 	" au FileType python map <silent> <buffer> <leader>I :PythonImportThisFile<CR>
 
 	" Change to directory of current file
@@ -263,6 +287,8 @@ let g:SimpylFold_docstring_preview = 1 " ???
 
 " NORMAL AND VISUAL MODE MAPPINGS
 " окна
+nnoremap } <C-w>>
+nnoremap { <C-w><
 nnoremap H <C-w>h
 nnoremap J <C-w>j
 nnoremap K <C-w>k
@@ -272,6 +298,7 @@ vnoremap M J
 nnoremap <C-q> :q!<CR>
 nnoremap \| :vnew<CR>
 nnoremap <SPACE> S
+
 
 " перемещения
 map = $
@@ -402,7 +429,7 @@ au FileType rust compiler! cargo
 " ctags -R --c++-kinds=+p --fields=+iaS --extra=+q -o .ctags
 "
 " Чтобы добавить теги к текущей сессии вима
-" :set tags+=.ctags 
+" :set tags+=.ctags
 "
 " В open.vim можно добавить:
 " !ctags -R --c++-kinds=+p --fields=+iaS --extra=+q -o .ctags
@@ -411,7 +438,7 @@ au FileType rust compiler! cargo
 
 
 " Чтобы включить проверку орфографии:
-" set spell spelllang=ru 
+" set spell spelllang=ru
 " z= - показать возможные исправления
 " ]s - к следующей ошибке
 " [s - к предыдущей ошибке
@@ -548,7 +575,7 @@ au FileType rust compiler! cargo
 " M       # US совместить две строки
 " ,       # <leader>
 " <       #
-" .       # повторить последнее редактирование 
+" .       # повторить последнее редактирование
 " >       #
 
 " <C-q>   # US :q!<CR>
@@ -596,7 +623,7 @@ au FileType rust compiler! cargo
 " <leader>Q ???
 " <leader>w US easy-motion к началу слова после
 " <leader>W US easy-motion к началу СЛОВА после
-" <leader>e US easy-motion к конца слова после
+" <leader>e US easy-motion к конца слова после, py: Ju run visual
 " <leader>E US easy-motion к конца СЛОВА после
 " <leader>r US make run; rust: run, py: !python3 main.py
 " <leader>R US make re;  rust: run --release
@@ -608,7 +635,7 @@ au FileType rust compiler! cargo
 " <leader>U ???
 " <leader>i US make run < input; rust: run < input, py: !python3 main.py < input
 " <leader>I ???
-" <leader>o ???
+" <leader>o US py: JupyterRunFile
 " <leader>O ???
 " <leader>p US make clean; rust: cargo clean
 " <leader>P ???
@@ -618,6 +645,7 @@ au FileType rust compiler! cargo
 " <leader>S ???
 " <leader>d r -> reload; y -> yank; h -> md2html; c: n -> norminette; c: f -> fmt42;
 "           m -> Man; c, cpp: c -> Cppman; s -> tab to spaces; t -> spaces to tabs;
+"           d -> :!!<CR>
 " <leader>D ???
 " <leader>f US easy-motion
 " <leader>F US easy-motion
@@ -633,7 +661,7 @@ au FileType rust compiler! cargo
 " <leader>L ???
 " <leader>z ???
 " <leader>Z ???
-" <leader>x ???
+" <leader>x py: Ju run cell
 " <leader>X ???
 " <leader>c US comment plugin
 " <leader>C ???
@@ -674,7 +702,7 @@ au FileType rust compiler! cargo
 " <C-r>   # вставить из регистра
 " <C-t>   # сделать таб в начале строки (ОСВОИТЬ)
 " <C-y>   # emmet
-" <C-u>   # удалить строку 
+" <C-u>   # удалить строку
 " <C-i>   # сделать таб (МОЖНО ПЕРЕНАЗНАЧИТЬ)
 " <C-o>   # USE преобразовать слово к верхнему регистру
 " <C-p>   # ??? (МОЖНО ПЕРЕНАЗНАЧИТЬ)

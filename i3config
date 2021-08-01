@@ -201,6 +201,32 @@ bar {
 bindsym $mod+o       mode "apps"
 bindsym $mod+Shift+o mode "apps"
 
+# a - whats app
+# b - baobab
+# c - gnome-system-monitor
+# d - ...
+# e - ...
+# f - firefox
+# g - ...
+# h - ...
+# i - ...
+# j - ...
+# k - ...
+# l - ...
+# m - music (rythmbox)
+# n - nemo
+# o - obsidian
+# p - ...
+# q - qbittorrent
+# r - ...
+# s - megasync
+# t - term
+# u - telegram
+# v - ...
+# w - libre office writer
+# x - ...
+# y - myteam
+# z - ...
 mode "apps" {
 	bindsym f            exec firefox
 	bindsym $mod+f       exec firefox
@@ -245,6 +271,18 @@ mode "apps" {
 	bindsym s            exec megasync
 	bindsym $mod+s       exec megasync
 	# bindsym $mod+Shift+s exec megasync
+
+	bindsym q            exec qbittorrent
+	bindsym $mod+q       exec qbittorrent
+	# bindsym $mod+Shift+q exec qbittorrent
+
+	bindsym b            exec baobab
+	bindsym $mod+b       exec baobab
+	# bindsym $mod+Shift+b exec baobab
+
+	bindsym c            exec gnome-system-monitor
+	bindsym $mod+c       exec gnome-system-monitor
+	# bindsym $mod+Shift+c exec gnome-system-monitor
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"

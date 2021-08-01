@@ -56,6 +56,9 @@ synclient PalmMinZ=50
 feh --bg-scale '/home/lis/imgs/Рабочий стол/Революция, тёмное.jpg'
 light `light`
 
+mkdir -p ~/d
+sudo mount /dev/sda6 ~/d
+
 
 . "$HOME/.cargo/env"
 

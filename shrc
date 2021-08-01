@@ -19,7 +19,45 @@ export inp=~/.local/initproj
 
 export fit='std@std-1416.ist.mospolytech.ru'
 export sph='a0555219@a0555219.xsph.ru'
+ 
+ 
+ 
+# daw completion
+_daw_completion() {
+	COMPREPLY=()
 
+	args=''
+	if [ "$COMP_CWORD" -eq 1 ]
+	then
+		args="list push load mount turn move remove current"
+	elif [ "$COMP_CWORD" -eq 2 ]
+	then
+		dir=`expr "${COMP_WORDS[COMP_CWORD]}" : '\(.*\)\/.*$'`
+		if [ -n "$dir" ]
+		then
+			targs=`find "$HOME/.local/daw/$dir" -maxdepth 1 -mindepth 1 -type d`
+			for arg in $targs
+			do
+				dir=`expr $arg : "$HOME\/\.local\/daw\/\(.*\)$"`
+				args+="$dir/ " 
+			done
+		else
+			targs=`find "$HOME/.local/daw/" -maxdepth 1 -mindepth 1 -type d`
+			for arg in $targs
+			do
+				dir=`expr $arg : '^.*\/\.local\/daw\/\(.*\)$'`
+				args+="$dir/ "
+			done
+		fi
+		# echo $args
+	fi
+
+	COMPREPLY=( $(compgen -W "${args}" -- ${COMP_WORDS[COMP_CWORD]}) )
+	return 0
+}
+
+complete -o bashdefault -o default -F _fzf_path_completion *
+complete -F _daw_completion daw
 
 
 # END
