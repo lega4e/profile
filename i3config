@@ -230,59 +230,45 @@ bindsym $mod+Shift+o mode "apps"
 mode "apps" {
 	bindsym f            exec firefox
 	bindsym $mod+f       exec firefox
-	# bindsym $mod+Shift+f exec firefox
 
 	bindsym t            exec term
 	bindsym $mod+t       exec term
-	# bindsym $mod+Shift+t exec term
 
 	bindsym n            exec nemo
 	bindsym $mod+n       exec nemo
-	# bindsym $mod+Shift+n exec nemo
 
 	bindsym o            exec obsidian
 	bindsym $mod+o       exec obsidian
-	# bindsym $mod+Shift+o exec obsidian
 
 	bindsym w            exec libreoffice --writer
 	bindsym $mod+w       exec libreoffice --writer
-	# bindsym $mod+Shift+w exec libreoffice --writer
 
 	bindsym m            exec music
 	bindsym $mod+m       exec music
-	# bindsym $mod+Shift+m exec music
 
 	bindsym y            exec myteam
 	bindsym $mod+y       exec myteam
-	# bindsym $mod+Shift+y exec myteam
 
 	bindsym a            exec WhatsApp
 	bindsym $mod+a       exec WhatsApp
-	# bindsym $mod+Shift+a exec WhatsApp
 
 	bindsym u            exec telega
 	bindsym $mod+u       exec telega
-	# bindsym $mod+Shift+u exec telega
 
 	bindsym g            exec firefox https://www.desmos.com/calculator?lang=ru
 	bindsym $mod+g       exec firefox https://www.desmos.com/calculator?lang=ru
-	# bindsym $mod+Shift+g exec firefox https://www.desmos.com/calculator?lang=ru
 
 	bindsym s            exec megasync
 	bindsym $mod+s       exec megasync
-	# bindsym $mod+Shift+s exec megasync
 
 	bindsym q            exec qbittorrent
 	bindsym $mod+q       exec qbittorrent
-	# bindsym $mod+Shift+q exec qbittorrent
 
 	bindsym b            exec baobab
 	bindsym $mod+b       exec baobab
-	# bindsym $mod+Shift+b exec baobab
 
 	bindsym c            exec gnome-system-monitor
 	bindsym $mod+c       exec gnome-system-monitor
-	# bindsym $mod+Shift+c exec gnome-system-monitor
 
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
@@ -294,13 +280,6 @@ bindsym $mod+i      exec cline
 bindsym $alt+F4     kill
 bindsym Ctrl+$alt+a exec flameshot gui
 bindsym $mod+x      exec tpdtgl
-
-
-# kodland
-bindsym Ctrl+$mod+m exec kdmax
-bindsym Ctrl+$mod+p exec kdplay
-bindsym Ctrl+$mod+o exec kdok
-bindsym Ctrl+$mod+i exec kdinp
 
 
 # autoload

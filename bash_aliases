@@ -47,6 +47,12 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
+# git
+alias gs="git status"
+alias gp="git push"
+alias ga="git add"
+alias gpl="git pull"
+
 
 # web
 alias github="firefox https://github.com/clever411?tab=repositories"

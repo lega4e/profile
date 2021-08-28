@@ -31,14 +31,15 @@ if [ -d "$HOME/.bin" ] ; then
 	PATH="$HOME/.bin:$PATH"
 fi
 
-export SHELL="/bin/zsh"
+# export SHELL="/bin/zsh"
 
 
 
 # my
 # 96 — код клавиши ENTER
 # 1  — код клавиши Escape
-sudo setkeycodes 0x3a 96 0xb8 1
+# sudo setkeycodes 0x3a 96 0xb8 1
+sudo setkeycodes 0xb8 1
 xset r rate 200 50
 
 
