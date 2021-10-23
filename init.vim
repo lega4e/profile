@@ -29,6 +29,7 @@ set nocompatible
 set nohlsearch
 set noswapfile
 set number	    " нумерование строк
+set relativenumber
 set shiftwidth=4
 " set smartindent " умные отступы
 " set smarttab
@@ -117,7 +118,7 @@ Plug 'vim-scripts/highlight_current_line.vim'
 
 Plug 'scrooloose/nerdtree' " просмотр файловой системы
 	 map <C-n> :NERDTreeToggle<CR>
-	 let NERDTreeIgnore=['\~$', 'target']
+	 let NERDTreeIgnore=['\~$', 'target', 'trg', '*.o']
 	 let g:NERDSpaceDelims     = 2
 	 let g:NERDTreeAutoCenter  = 0
 	 let g:NERDTreeMinimalMenu = 1
@@ -267,11 +268,10 @@ Plug 'jupyter-vim/jupyter-vim'
 	" au FileType python nmap <silent> <buffer> <leader>E :JupyterSendRange<CR>
 	au FileType python nmap <silent> <buffer> <leader>e V<leader>e<esc>
 	au FileType python vmap <silent> <buffer> <leader>e <Plug>JupyterRunVisual
-
-	nnoremap <buffer> <silent> <leader>U :JupyterUpdateShell<CR>
+	au FileType python nnoremap <buffer> <silent> <leader>U :JupyterUpdateShell<CR>
 
 	" Debugging maps
-	nnoremap <buffer> <silent> <leader>b :PythonSetBreak<CR>
+	au FileType python nnoremap <buffer> <silent> <leader>b :PythonSetBreak<CR>
 
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
@@ -288,7 +288,8 @@ Plug 'cacharle/c_formatter_42.vim'
 	au BufNewFile,BufRead *.h vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<CR>
 
 Plug 'pbondoer/vim-42header'
-	au FileType c nmap <silent> <buffer> <leader>dh :Stdheader<CR>
+	au FileType c nnoremap <silent> <buffer> <leader>dh :Stdheader<CR>
+	au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>dh :Stdheader<CR>
 
 Plug 'matze/vim-move'
 	nmap <C-j> <Plug>MoveLineDown
@@ -312,8 +313,8 @@ Plug 'airblade/vim-gitgutter'
 	let g:gitgutter_map_keys = 0
 	" set signcolumn=yes " always have sign column
 	nnoremap <silent> <leader>gq :GitGutterQuickFix \| copen<CR>
-	nnoremap <silent> <leader>gu :GitGutterUndoHunk<CR>:w<CR>:GitGutterALL<CR>
-	nnoremap <silent> <leader>gs :GitGutterStageHunk<CR>:w<CR>:GitGutterALL<CR>
+	nnoremap <silent> <leader>gu :GitGutterUndoHunk<CR>:w<CR>:GitGutterAll<CR>
+	nnoremap <silent> <leader>gs :GitGutterStageHunk<CR>:w<CR>:GitGutterAll<CR>
 	nnoremap <silent> <leader>gp :GitGutterPreviewHunk<CR>
 	nnoremap <silent> <leader>gf :GitGutterFold<CR>
 	nnoremap <silent> <leader>gh :GitGutterLineHighlightsToggle<CR>
@@ -337,9 +338,9 @@ Plug 'lilydjwg/colorizer'
 	" let g:vim_search_pulse_duration = 100
 
 " Красивые комментарии
-Plug 'cometsong/CommentFrame.vim'
+" Plug 'cometsong/CommentFrame.vim'
 	" let g:CommentFrame_SkipDefaultMappings = 1 " to not use default keymaps
-	let g:CommentFrame_TextWidth = 80
+	" let g:CommentFrame_TextWidth = 80
 	" Basic Usage:
 
 	" The default keymappings are setup for a custom function to create a CommentFrame
@@ -361,6 +362,8 @@ Plug 'cometsong/CommentFrame.vim'
     " frq     CommentRightQuote           line: "~~~~~~~~~~~~~~~~~~~~~ title ~~~~~
 
 Plug 'AndrewRadev/splitjoin.vim'
+	" gS - split
+	" gJ - join
 
 " Новый текстовый объект, определённый по уровню отступов
 Plug 'michaeljsmith/vim-indent-object'
@@ -376,13 +379,16 @@ Plug 'maxbrunsfeld/vim-yankstack'
 	imap <A-i> <Plug>yankstack_substitute_newer_paste
 
 Plug 'mattn/webapi-vim'
-Plug 'mattn/vim-gist'
+" Plug 'mattn/vim-gist'
+
+" Переключение между заголовочными и исходными файлами
+Plug 'linluk/vim-c2h'
+	" ,ch
 
 call plug#end()
 
 filetype on
 colorscheme gruvbox-material " цветовая схема
-" let g:SimpylFold_docstring_preview = 1 " ???
 
 
 
@@ -403,15 +409,17 @@ nnoremap L <C-w>l
 nnoremap <C-q> <C-w>x
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-f> :tabnew<space>
+nnoremap <C-h> gT
 nnoremap <BS> gT
 nnoremap <C-l> gt
-nnoremap M J
-vnoremap M J
 nnoremap gq :q!<CR>
 nnoremap gQ :wq<CR>
 nnoremap \ :vnew<CR>
 nnoremap \| :new<CR>
 nnoremap <SPACE> S
+
+nnoremap M J
+vnoremap M J
 
 
 " перемещения
@@ -434,9 +442,12 @@ nnoremap ]B :blast<CR>
 
 " операции со всем файлом
 nnoremap <C-s> :source .open.vim<cr>
+nnoremap <leader>m :w<CR>
+nnoremap <leader>M :wa<CR>
 nnoremap <leader>dh :%!mdtohtml --html4tags <CR>
 nnoremap <leader>dr :e %<CR>
-nnoremap <leader>dy :%y+<CR>
+nnoremap <leader>dy :%y"<CR>
+nnoremap <leader>dY :%y+<CR>
 nnoremap <leader>dm :Man<SPACE>
 nnoremap <leader>dd :!!<CR>
 nnoremap <leader>dv :tabnew $vimrc<CR>
@@ -451,11 +462,12 @@ nnoremap <F3> 1gt:wa<CR>:make run<CR>
 nnoremap <F4> 1gt:wa<CR>:make re<CR>
 nnoremap <F5> 1gt:wa<CR>:make test<CR>
 
-nnoremap <leader>r :make run<CR>
-nnoremap <leader>R :make re<CR>
-nnoremap <leader>i :make run < input<CR>
-nnoremap <leader>b :make<CR>
-nnoremap <leader>p :make clean<CR>
+nnoremap <leader>b :wa<CR>:make<CR>
+nnoremap <leader>B :wa<CR>:make re<CR>
+nnoremap <leader>r :wa<CR>:make run<CR>
+nnoremap <leader>R :wa<CR>:make rerun<CR>
+nnoremap <leader>i :wa<CR>:make run < input<CR>
+nnoremap <leader>p :wa<CR>:make clean<CR>
 
 
 
@@ -483,8 +495,8 @@ let g:rust_recommended_style   = 0
 au FileType c,cpp,java,js,php,python,glsl syntax match Function /\I\i\+\s*(\@=/
 au FileType c,cpp,java,js,php,python,glsl syntax match Type /[a-zA-Z0-9_]\@<!\I\i\+_t[a-zA-Z0-9_]\@!/
 au FileType c,cpp,java,js,php,python,glsl syntax match Identifier /\(#.*\)\@<![a-zA-Z0-9_]\@<!_*[A-Z][a-zA-Z0-9_]\+[a-zA-Z0-9_]\@!/
-au FileType c,cpp,java,js,php,python,glsl syntax match Constant /\(#.*\)\@<![a-zA-Z0-9_]\@<![A-Z][A-Z0-9_]\+[a-zA-Z0-9_]\@!/
-au FileType c,cpp,java,js,php,python,glsl syntax match Constant /\(#.*\)\@<![a-zA-Z0-9_]\@<!_\+[A-Z0-9][A-Z0-9_]\+[a-zA-Z0-9_]\@!/
+au FileType c,cpp,java,js,php,python,glsl syntax match Constant /\(#.*\)\@<![a-zA-Z0-9_]\@<![A-Z][A-Z0-9_]*[a-zA-Z0-9_]\@!/
+au FileType c,cpp,java,js,php,python,glsl syntax match Constant /\(#.*\)\@<![a-zA-Z0-9_]\@<!_\+[A-Z0-9][A-Z0-9_]*[a-zA-Z0-9_]\@!/
 
 " CPP, C
 au FileType cpp syntax keyword Type byte ubyte ushort uint ulong llong ull ullong ldouble id_t
@@ -502,8 +514,8 @@ au FileType c   nnoremap <silent> <buffer> <leader>v :!gcc -fsyntax-only %<CR>
 
 " PYTHON
 au FileType python setlocal foldmethod=indent
-au FileType python nnoremap <silent> <buffer> <leader>r :!python3 main.py<CR>
-au FileType python nnoremap <silent> <buffer> <leader>i :!python3 main.py < input<CR>
+au FileType python nnoremap <silent> <buffer> <leader>r :wa<CR>:!python3 main.py<CR>
+au FileType python nnoremap <silent> <buffer> <leader>i :wa<CR>:!python3 main.py < input<CR>
 
 
 " HTML, XML, JSON
@@ -529,13 +541,13 @@ au BufNewFile,BufRead *.pug setlocal shiftwidth=2
 
 
 " RUST
-au FileType rust nnoremap <silent> <buffer> <leader>r :!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo run<CR>
-au FileType rust nnoremap <silent> <buffer> <leader>R :!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo run --release<CR>
-au FileType rust nnoremap <silent> <buffer> <leader>i :!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo run < input<CR>
-au FileType rust nnoremap <silent> <buffer> <leader>b :!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo build<CR>
-au FileType rust nnoremap <silent> <buffer> <leader>B :!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo build --release<CR>
-au FileType rust nnoremap <silent> <buffer> <leader>p :!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo clean<CR>
-au FileType rust nnoremap <silent> <buffer> <leader>v :!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo check<CR>
+au FileType rust nnoremap <silent> <buffer> <leader>r :wa<CR>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo run<CR>
+au FileType rust nnoremap <silent> <buffer> <leader>R :wa<CR>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo run --release<CR>
+au FileType rust nnoremap <silent> <buffer> <leader>i :wa<CR>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo run < input<CR>
+au FileType rust nnoremap <silent> <buffer> <leader>b :wa<CR>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo build<CR>
+au FileType rust nnoremap <silent> <buffer> <leader>B :wa<CR>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo build --release<CR>
+au FileType rust nnoremap <silent> <buffer> <leader>p :wa<CR>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo clean<CR>
+au FileType rust nnoremap <silent> <buffer> <leader>v :wa<CR>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo check<CR>
 au FileType rust let g:AutoPairs = { "[" : "]", '"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''" }
 au FileType rust compiler! cargo
 
@@ -750,7 +762,7 @@ au FileType rust compiler! cargo
 " <leader>Z ???
 " <leader>x py: Ju run cell
 " <leader>X ???
-" <leader>c US comment plugin
+" <leader>c US comment plugin (h -> c2h)
 " <leader>C ???
 " <leader>v US rust: check
 " <leader>V ???
@@ -758,8 +770,8 @@ au FileType rust compiler! cargo
 " <leader>B US rust: build --release
 " <leader>n ???
 " <leader>N ???
-" <leader>m ???
-" <leader>M ???
+" <leader>m US: :w<CR>
+" <leader>M US: :wa<CR>
 
 
 

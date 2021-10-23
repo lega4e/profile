@@ -1,0 +1,85 @@
+{
+    // window
+    "window.zoomLevel": 0,
+
+    // editor
+    "editor.tabSize":                    4,
+    "editor.insertSpaces":               false,
+    "editor.fontSize":                   13,
+    "editor.fontLigatures":              false,
+    "editor.fontFamily":                 "'PT Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.codeLens":                   false,
+    "editor.lightbulb.enabled":          false,
+    "editor.matchBrackets":              "near",
+    "editor.smoothScrolling":            true,
+    "editor.highlightActiveIndentGuide": false,
+    "editor.selectionHighlight":         false,
+    "editor.occurrencesHighlight":       false,
+    "editor.lineNumbers":                "relative",
+    "files.eol":                         "\n",
+    "files.insertFinalNewline":          false,
+    "editor.scrollbar.vertical":         "hidden",
+    "editor.scrollbar.verticalScrollbarSize": 1,
+
+    // diffEditor
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    // file explorer
+    "files.exclude": {
+        "**/.gitignore": true,
+        "**/*.a":        true,
+        "**/*.o":        true,
+        "**/main":       true,
+        "**/trg":        true
+    },
+
+    // c,cpp
+    "C_Cpp.updateChannel":        "Insiders",
+    "C_Cpp.default.compilerPath": "/usr/bin/g++",
+
+    // vim
+    "vim.enableNeovim":           true,
+    "vim.neovimConfigPath":       "~/.config/nvim/init.vim",
+    "vim.leader":                 ",",
+    "vim.neovimPath":             "/usr/bin/nvim",
+    "vim.neovimUseConfigFile":    true,
+    "vim.easymotion":             true,
+
+    "vim.insertModeKeyBindings": [
+        { "before": ["<C-l>"], "after": ["<Del>"] },
+    ],
+
+    "vim.normalModeKeyBindingsNonRecursive": [
+        { "before": ["M"],                     "after" : ["J"] },
+        { "before": ["g", "q"],             "commands" : ["workbench.action.closeActiveEditor"] },
+        { "before": ["-"],                     "after" : ["^"] },
+        { "before": ["="],                     "after" : ["$"] },
+        { "before": ["g", "o"],             "commands" : ["fzf-quick-open.runFzfFile"] },
+        { "before": ["<C-n>"],              "commands" : ["workbench.explorer.fileView.toggleVisibility"] },
+        { "before": ["<leader>", "g", "a"], "commands" : ["wwm.aligncode"] },
+        { "before": ["<leader>", "c", "h"], "commands" : ["C_Cpp.SwitchHeaderSource"] },
+
+        // comments
+        { "before": ["<leader>", "c", "<space>"], "commands": ["editor.action.commentLine"] },
+        { "before": ["<leader>", "c", "s"],       "commands": ["editor.action.blockComment"] },
+
+        // easy-motion
+        { "before": ["<leader>", "s"], "after": ["<leader>", "<leader>", "s"] },
+        { "before": ["<leader>", "f"], "after": ["<leader>", "<leader>", "f"] },
+        { "before": ["<leader>", "F"], "after": ["<leader>", "<leader>", "F"] },
+        { "before": ["<leader>", "t"], "after": ["<leader>", "<leader>", "t"] },
+        { "before": ["<leader>", "T"], "after": ["<leader>", "<leader>", "T"] },
+        // { "before": ["<leader>", "w"], "after": ["<leader>", "<leader>", "w"] },
+        // { "before": ["<leader>", "W"], "after": ["<leader>", "<leader>", "b"] },
+
+        // school 42
+        { "before": ["<leader>", "d", "h"], "commands": ["42header.insertHeader"] },
+        // { "before": ["<leader>", "d", "n"], "commands": ["norminette.command"] },
+    ],
+
+    "vim.visualModeKeyBindings": [
+        { "before": ["<leader>", "c", "<space>"], "commands": ["editor.action.commentLine"]  },
+        { "before": ["<leader>", "c", "s"],       "commands": ["editor.action.blockComment"] },
+        { "before": ["<leader>", "c", "<space>"], "commands": ["editor.emmet.action.toggleComment"] },
+    ]
+}

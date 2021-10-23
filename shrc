@@ -2,6 +2,8 @@
 
 
 
+# source ~/.fzf.sh
+
 export PATH=.:$PATH
 export PATH_TO_FX=/usr/share/openjfx/lib
 export PATH_TO_FX_MODS=/usr/share/openjfx/jmods
@@ -19,6 +21,12 @@ export inp=~/.local/initproj
 
 export fit='std@std-1416.ist.mospolytech.ru'
 export sph='a0566996@a0566996.xsph.ru'
+export sc21='~/.local/daw/sc21/42'
+
+# clang
+export CPATH='/usr/include:/usr/local/include:/usr/include/c++/9:/usr/include/c++/9/backward:/usr/include/x86_64-linux-gnu/c++/9'
+export LIBRARY_PATH=/usr/local/lib:/usr/lib/x86_64-linux-gnu
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/lib/x86_64-linux-gnu
 
 
 
@@ -56,8 +64,9 @@ _daw_completion() {
 	return 0
 }
 
-complete -o bashdefault -o default -F _fzf_path_completion *
+# complete -o bashdefault -o default -F _fzf_path_completion *
 complete -F _daw_completion daw
+
 
 
 # END

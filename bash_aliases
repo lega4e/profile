@@ -2,14 +2,15 @@
 alias please=sudo
 alias pls=sudo
 
-alias l="ls   -v --group-directories-first --color=always"
-alias ls="ls  -v --group-directories-first --color=always"
-alias sl="ls  -v --group-directories-first --color=always"
-alias ll="ls  -v --group-directories-first --color=always -l"
-alias la="ls  -v --group-directories-first --color=always -a"
+alias l='ls   -v --group-directories-first --color=always'
+alias ls='ls  -v --group-directories-first --color=always'
+alias sl='ls  -v --group-directories-first --color=always'
+alias ll='ls  -v --group-directories-first --color=always -l'
+alias la='ls  -v --group-directories-first --color=always -a'
 
-alias lla="ls -v --group-directories-first --color=always -la"
-alias tree='tree --dirsfirst'
+alias lla='ls -v --group-directories-first --color=always -la'
+alias tree='tree --dirsfirst -v'
+alias sort='sort -V'
 
 alias pud='pushd'
 alias pd='pushd'
