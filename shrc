@@ -21,7 +21,7 @@ export inp=~/.local/initproj
 
 export fit='std@std-1416.ist.mospolytech.ru'
 export sph='a0566996@a0566996.xsph.ru'
-export sc21='~/.local/daw/sc21/42'
+export sc21='/home/lis/.local/daw/sc21/42'
 
 # clang
 export CPATH='/usr/include:/usr/local/include:/usr/include/c++/9:/usr/include/c++/9/backward:/usr/include/x86_64-linux-gnu/c++/9'

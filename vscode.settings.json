@@ -12,7 +12,7 @@
     "editor.lightbulb.enabled":          false,
     "editor.matchBrackets":              "near",
     "editor.smoothScrolling":            true,
-    "editor.highlightActiveIndentGuide": false,
+    // "editor.highlightActiveIndentGuide": false,
     "editor.selectionHighlight":         false,
     "editor.occurrencesHighlight":       false,
     "editor.lineNumbers":                "relative",
@@ -51,18 +51,26 @@
 
     "vim.normalModeKeyBindingsNonRecursive": [
         { "before": ["M"],                     "after" : ["J"] },
-        { "before": ["g", "q"],             "commands" : ["workbench.action.closeActiveEditor"] },
         { "before": ["-"],                     "after" : ["^"] },
         { "before": ["="],                     "after" : ["$"] },
+
+        // tabs
+        { "before": ["L"],                  "commands" : ["workbench.action.focusRightGroup"] },
+        { "before": ["H"],                  "commands" : ["workbench.action.focusLeftGroup"] },
+        { "before": ["g", "q"],             "commands" : ["workbench.action.closeActiveEditor"] },
         { "before": ["g", "o"],             "commands" : ["fzf-quick-open.runFzfFile"] },
+        { "before": ["g", "i"],             "commands" : ["workbench.action.splitEditorToRightGroup"] },
+
         { "before": ["<C-n>"],              "commands" : ["workbench.explorer.fileView.toggleVisibility"] },
         { "before": ["<leader>", "g", "a"], "commands" : ["wwm.aligncode"] },
         { "before": ["<leader>", "c", "h"], "commands" : ["C_Cpp.SwitchHeaderSource"] },
 
-        // comments
+        // text editing
         { "before": ["<leader>", "c", "<space>"], "commands": ["editor.action.commentLine"] },
         { "before": ["<leader>", "c", "s"],       "commands": ["editor.action.blockComment"] },
-
+        { "before": ["<C-j>"], "commands": ["editor.action.moveLinesDownAction"] },
+        { "before": ["<C-k>"], "commands": ["editor.action.moveLinesUpAction"] },
+        
         // easy-motion
         { "before": ["<leader>", "s"], "after": ["<leader>", "<leader>", "s"] },
         { "before": ["<leader>", "f"], "after": ["<leader>", "<leader>", "f"] },
@@ -75,11 +83,19 @@
         // school 42
         { "before": ["<leader>", "d", "h"], "commands": ["42header.insertHeader"] },
         // { "before": ["<leader>", "d", "n"], "commands": ["norminette.command"] },
+
+        // sql
+        { "before": ["<leader>", "e"], "commands": ["sqltools.executeQuery"] },
     ],
 
     "vim.visualModeKeyBindings": [
         { "before": ["<leader>", "c", "<space>"], "commands": ["editor.action.commentLine"]  },
         { "before": ["<leader>", "c", "s"],       "commands": ["editor.action.blockComment"] },
         { "before": ["<leader>", "c", "<space>"], "commands": ["editor.emmet.action.toggleComment"] },
+        { "before": ["<C-j>"], "commands": ["editor.action.moveLinesDownAction"] },
+        { "before": ["<C-k>"], "commands": ["editor.action.moveLinesUpAction"] },
+
+        // sql
+        { "before": ["<leader>", "e"], "commands": ["sqltools.executeQuery"] },
     ]
 }

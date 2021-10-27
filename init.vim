@@ -1,7 +1,7 @@
 "''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 " переключение языков
-function! Switch()
+fun! SwitchLanguage()
 	if &iminsert == 0
 		set iminsert=1
 	else
@@ -26,29 +26,32 @@ set autoindent
 set autoread	" автоматически загружать внешние изменения файла
 " set list " отображать симоволы табуляции
 set nocompatible
-set nohlsearch
+set nohlsearch " no highlight search result after <cr>
+set incsearch  " highlight search result while typing
 set noswapfile
 set number	    " нумерование строк
 set relativenumber
 set shiftwidth=4
-" set smartindent " умные отступы
-" set smarttab
+set smartindent " умные отступы
+set smarttab
 set splitright
 set tabstop=4
 set splitbelow
+set nowrap
 
-" мышка
 set mousehide
 set mouse=a
 set novisualbell
 set backspace=indent,eol,start whichwrap+=<,>,[,]
 set showtabline=1 " set foldcolumn=1
 
-" раскладка
 set keymap=russian-dictor
 set iminsert=0
 set imsearch=0
 set foldmethod=syntax
+set foldlevelstart=99
+set ttimeoutlen=0 " Чтобы не было задержек
+set encoding=utf-8
 
 
 
@@ -58,51 +61,107 @@ set foldmethod=syntax
 call plug#begin('~/.config/nvim/autoload/plugged')
 
 
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
+Plug 'powerline/powerline'
+
 Plug 'fweep/vim-tabber'
 	" let g:tabber_wrap_when_shifting = 1
 	let g:tabber_filename_style = 'filename'
-	nnoremap gp :TabberSelectLastActive<CR>
-	nnoremap g<left> :TabberShiftLeft<CR>
-	nnoremap g<right> :TabberShiftRight<CR>
-Plug 'ycm-core/YouCompleteMe' " автодополнение
-	" let g:ycm_clangd_binary_path = "/usr/bin/clangd"
-	let g:ycm_global_ycm_extra_conf              = '~/.ycm_extra_conf.py'
-	let g:ycm_confirm_extra_conf                 = 0
-	let g:ycm_max_num_candidates                 = 50
-	let g:ycm_key_list_select_completion         = [ '<tab>', '<down>', '<c-k>' ]
-	let g:ycm_key_list_previous_completion       = [ '<up>' ]
-	let g:ycm_auto_trigger                       = 1
-	let g:ycm_min_num_of_chars_for_completion    = 2
-	let g:ycm_show_diagnostics_ui                = 0
-	let g:ycm_enable_diagnostic_signs            = 0
-	let g:ycm_filter_diagnostics                 = { "cpp": { "level": "warning" } }
-	let g:ycm_key_list_stop_completion           = ['']
-	let g:ycm_key_invoke_completion              = '<c-space>'
-	let g:ycm_semantic_triggers                  = {
-				\ 'c' : [ 're!\w{5,20}'],
-				\ 'cpp' : [ 're!\w{5,20}']
-				\ }
-	set completeopt-=preview
-	nnoremap gd :YcmCompleter GoTo<cr>
-	nnoremap gs :YcmCompleter GoToSymbol<space>
+	" nnoremap gp :TabberSelectLastActive<CR>
+	" nnoremap g<left>  :TabberShiftLeft<CR>
+	" nnoremap g<right> :TabberShiftRight<CR>
 
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	 "if has("patch-8.1.1564")
-	   "set signcolumn=number
-	 "else
-	   "set signcolumn=yes
-	 "endif
+" Plug 'ycm-core/YouCompleteMe' " автодополнение
+	" " let g:ycm_clangd_binary_path = "/usr/bin/clangd"
+	" let g:ycm_global_ycm_extra_conf              = '~/.ycm_extra_conf.py'
+	" let g:ycm_confirm_extra_conf                 = 0
+	" let g:ycm_max_num_candidates                 = 50
+	" let g:ycm_key_list_select_completion         = [ '<tab>', '<down>', '<c-k>' ]
+	" let g:ycm_key_list_previous_completion       = [ '<up>' ]
+	" let g:ycm_auto_trigger                       = 1
+	" let g:ycm_min_num_of_chars_for_completion    = 2
+	" let g:ycm_show_diagnostics_ui                = 0
+	" let g:ycm_enable_diagnostic_signs            = 0
+	" let g:ycm_filter_diagnostics                 = { "cpp": { "level": "warning" } }
+	" let g:ycm_key_list_stop_completion           = ['']
+	" let g:ycm_key_invoke_completion              = '<c-space>'
+	" let g:ycm_semantic_triggers                  = {
+				" \ 'c' : [ 're!\w{5,20}'],
+				" \ 'cpp' : [ 're!\w{5,20}']
+				" \ }
+	" set completeopt-=preview
+	" nnoremap gd :YcmCompleter GoTo<cr>
+	" nnoremap gs :YcmCompleter GoToSymbol<space>
 
-	 "function! s:check_back_space() abort
-	   "let col = col('.') - 1
-	   "return !col || getline('.')[col - 1]  =~ '\s'
-	 "endfunction
 
-	 "inoremap <silent><expr> <Tab>
-		   "\ pumvisible() ? "\<C-n>" :
-		   "\ <SID>check_back_space() ? "\<Tab>" :
-		   "\ coc#refresh()
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+	" TextEdit might fail if hidden is not set.
+	set hidden
+
+	" Some servers have issues with backup files, see #649.
+	set nobackup
+	set nowritebackup
+
+	" Give more space for displaying messages.
+	set cmdheight=2
+
+	" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+	" delays and poor user experience.
+	set updatetime=300
+
+	" Don't pass messages to |ins-completion-menu|.
+	set shortmess+=c
+
+	 if has("patch-8.1.1564")
+	   set signcolumn=number
+	 else
+	   set signcolumn=yes
+	 endif
+
+	 inoremap <silent><expr> <Tab>
+		   \ pumvisible() ? "\<C-n>" :
+		   \ <SID>check_back_space() ? "\<Tab>" :
+		   \ coc#refresh()
+
+	 inoremap <silent><expr> <C-k>
+		   \ pumvisible() ? "\<C-n>" :
+		   \ <SID>check_back_space() ? "\<C-k>" :
+		   \ coc#refresh()
+
+	 function! s:check_back_space() abort
+	   let col = col('.') - 1
+	   return !col || getline('.')[col - 1]  =~ '\s'
+	 endfunction
+
+	 " Use <c-space> to trigger completion.
+	if has('nvim')
+	  inoremap <silent><expr> <c-space> coc#refresh()
+	else
+	  inoremap <silent><expr> <c-@> coc#refresh()
+	endif
+
+	" Use `[g` and `]g` to navigate diagnostics
+	" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+	nmap     <silent> [g <Plug>(coc-diagnostic-prev)
+	nmap     <silent> ]g <Plug>(coc-diagnostic-next)
+
+	" GoTo code navigation.
+	nmap     <silent> gd <Plug>(coc-definition)
+	nmap     <silent> gy <Plug>(coc-type-definition)
+	nmap     <silent> gI <Plug>(coc-implementation)
+	nmap     <silent> gr <Plug>(coc-references)
+	nnoremap <silent> gD :call <SID>show_documentation()<CR>
+
+	function! s:show_documentation()
+	  if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	  elseif (coc#rpc#ready())
+		call CocActionAsync('doHover')
+	  else
+		execute '!' . &keywordprg . " " . expand('<cword>')
+	  endif
+	endfunction
 
 Plug 'scrooloose/nerdcommenter' " комментирование
 " Plug 'tpope/vim-commentary' " ещё один плагин на комментирование
@@ -114,7 +173,7 @@ Plug 'SirVer/ultisnips' " сниппеты
 	 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 	 let g:UltiSnipsEditSplit="vertical"
 
-Plug 'vim-scripts/highlight_current_line.vim'
+" Plug 'vim-scripts/highlight_current_line.vim'
 
 Plug 'scrooloose/nerdtree' " просмотр файловой системы
 	 map <C-n> :NERDTreeToggle<CR>
@@ -124,29 +183,38 @@ Plug 'scrooloose/nerdtree' " просмотр файловой системы
 	 let g:NERDTreeMinimalMenu = 1
 	 let g:NERDTreeMinimalUI   = 1
 	 let g:NERDTreeMouseMode   = 1
- " If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
- autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+ " If another buffer tries to replace NERDTree, put it in the other
+ " window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && 
+\	bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 | 
+\	let buf=bufnr() | buffer# | execute "normal! \<C-W>w" |
+\	execute 'buffer'.buf | endif
 
  " Close the tab if NERDTree is the only window remaining in it.
- autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') &&
+\	b:NERDTree.isTabTree() | quit | endif
 
  " Exit Vim if NERDTree is the only window remaining in the only tab.
- autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 &&
+\	exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
- Plug 'Xuyuanp/nerdtree-git-plugin'
-	 let g:NERDTreeGitStatusIndicatorMapCustom = {
-					 \ 'Modified'  :'✹',
-					 \ 'Staged'    :'✚',
-					 \ 'Untracked' :'✭',
-					 \ 'Renamed'   :'➜',
-					 \ 'Unmerged'  :'═',
-					 \ 'Deleted'   :'✖',
-					 \ 'Dirty'     :'✗',
-					 \ 'Ignored'   :'☒',
-					 \ 'Clean'     :'✔︎',
-					 \ 'Unknown'   :'?',
-					 \ }
-	 let g:NERDTreeGitStatusUseNerdFonts = 1
+Plug 'Xuyuanp/nerdtree-git-plugin'
+	let g:NERDTreeGitStatusIndicatorMapCustom = {
+\		'Modified'  :'✹',
+\		'Staged'    :'✚',
+\		'Untracked' :'✭',
+\		'Renamed'   :'➜',
+\		'Unmerged'  :'═',
+\		'Deleted'   :'✖',
+\		'Dirty'     :'✗',
+\		'Ignored'   :'☒',
+\		'Clean'     :'✔︎',
+\		'Unknown'   :'?',
+\	}
+	let g:NERDTreeGitStatusUseNerdFonts = 1
+
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 Plug 'PhilRunninger/nerdtree-visual-selection'
 " Plug 'jistr/vim-nerdtree-tabs'
@@ -162,7 +230,7 @@ Plug 'easymotion/vim-easymotion'
 	" ,e<sym> - К конча слова после текущей позицией
 	" ,E<sym> - К началу слова после текущей позицией
 
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'
 Plug 'https://github.com/tpope/vim-surround'
 	" cs'" - заменить ' на " ( можно указывать любые скобки: `'[{(<' )
@@ -238,18 +306,11 @@ Plug 'junegunn/vim-easy-align' " выравнивание
 Plug 'tikhomirov/vim-glsl' " Подсветка синтаксиса для GLSL
 	autocmd! BufNewFile,BufRead *.vs,*.fs,*.frag set ft=glsl
 
-" packadd! vimspector
-	" let g:vimspector_enable_mappings = 'HUMAN'
-	" map <F22> :call vimspector#StepInto()<CR>
-
-" " colorschemes
-" Plug 'kristijanhusak/vim-hybrid-material'
-" Plug 'sainnhe/sonokai'
-Plug 'sainnhe/gruvbox-material'
-" "Plug 'tmhedberg/simpylfold'
+" " packadd! vimspector
+	" " let g:vimspector_enable_mappings = 'HUMAN'
+	" " map <F22> :call vimspector#StepInto()<CR>
 
 Plug 'ryanoasis/vim-devicons'
-	set encoding=UTF-8
 	set guifont=DroidSansMono\ Nerd\ Font\ 10
 	let g:airline_powerline_fonts = 1
 
@@ -257,18 +318,18 @@ Plug 'jupyter-vim/jupyter-vim'
 	let g:python3_host_prog = '/usr/bin/python3'
 	let g:jupyter_mapkeys   = 0
 	" Run current file
-	au FileType python map <silent> <buffer> <leader>o :JupyterRunFile<CR>
+	au FileType python nnoremap <silent> <buffer> <leader>o :JupyterRunFile<CR>
 	" au FileType python map <silent> <buffer> <leader>I :PythonImportThisFile<CR>
 
 	" Change to directory of current file
 	" au FileType python map <silent> <buffer> <leader>d :JupyterCd %:p:h<CR>
-
 	" Send a selection of lines
-	au FileType python nmap <silent> <buffer> <leader>x :JupyterSendCell<CR>
-	" au FileType python nmap <silent> <buffer> <leader>E :JupyterSendRange<CR>
-	au FileType python nmap <silent> <buffer> <leader>e V<leader>e<esc>
-	au FileType python vmap <silent> <buffer> <leader>e <Plug>JupyterRunVisual
-	au FileType python nnoremap <buffer> <silent> <leader>U :JupyterUpdateShell<CR>
+	au FileType python nnoremap <silent> <buffer> <leader>x  :JupyterSendCell<CR>
+	au FileType python nnoremap <silent> <buffer> <leader>E  :JupyterSendRange<CR>
+	au FileType python nnoremap <silent> <buffer> <leader>e  V<leader>e<esc>
+	au FileType python vnoremap <silent> <buffer> <leader>e  <Plug>JupyterRunVisual
+	au FileType python nnoremap <buffer> <silent> <leader>cc :JupyterConnect<CR>
+	au FileType python nnoremap <buffer> <silent> <leader>U  :JupyterUpdateShell<CR>
 
 	" Debugging maps
 	au FileType python nnoremap <buffer> <silent> <leader>b :PythonSetBreak<CR>
@@ -276,19 +337,23 @@ Plug 'jupyter-vim/jupyter-vim'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'jiangmiao/auto-pairs'
-	let g:AutoPairs = { "[" : "]", "{" : "}", "'":"'", '"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''" }
+	let g:AutoPairs = { "[" : "]", "{" : "}", "'":"'", '"':'"', "`":"`",
+\									'```':'```', '"""':'"""', "'''":"'''" }
 	let g:AutoPairsShortcutToggle = ''
+
 Plug 'rust-lang/rust.vim'
+
+" SCHOOL 21
 Plug 'cacharle/c_formatter_42.vim'
-	au FileType c nnoremap <silent> <buffer> <leader>dn :w<CR>:Norminette<CR>
-	au FileType c nnoremap <silent> <buffer> <leader>df :CFormatter42<CR>:w<CR>
-	au FileType c vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<CR>
+	au FileType           c   nnoremap <silent> <buffer> <leader>dn :w<CR>:Norminette<CR>
+	au FileType           c   nnoremap <silent> <buffer> <leader>df :CFormatter42<CR>:w<CR>
+	au FileType           c   vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<CR>
 	au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>dn :w<CR>:NorminetteHeader<CR>
 	au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>df :CFormatter42<CR>:w<CR>
 	au BufNewFile,BufRead *.h vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<CR>
 
 Plug 'pbondoer/vim-42header'
-	au FileType c nnoremap <silent> <buffer> <leader>dh :Stdheader<CR>
+	au FileType           c   nnoremap <silent> <buffer> <leader>dh :Stdheader<CR>
 	au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>dh :Stdheader<CR>
 
 Plug 'matze/vim-move'
@@ -309,6 +374,7 @@ Plug 'vim-utils/vim-man'
 	let c_no_curly_error                             = 1
 	" au FileType cpp syntax keyword Operator template typename
 " Plug 'bfrg/vim-cpp-modern'
+
 Plug 'airblade/vim-gitgutter'
 	let g:gitgutter_map_keys = 0
 	" set signcolumn=yes " always have sign column
@@ -327,11 +393,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'dbeniamine/cheat.sh-vim'
 
 " Подсветка цветов по HTML-коду
-Plug 'lilydjwg/colorizer'
+" Значительно замедляет загрузку больших (>1000 строк) файлов
+" Plug 'lilydjwg/colorizer'
 
 " " Разноцветная подсветка скобок
-" Plug 'luochen1990/rainbow'
-	" let g:rainbow_active = 1
+Plug 'luochen1990/rainbow'
+	let g:rainbow_active = 1
+	let g:rainbow_conf = {
+\		'separately': {
+\			'html':     0,
+\			'nerdtree': 0
+\		}
+\	}
 
 " Анимация пульсации при поиске
 " Plug 'inside/vim-search-pulse'
@@ -347,21 +420,21 @@ Plug 'lilydjwg/colorizer'
 	" and also a CommentRight line.  All keymapping start with <Leader>, all default
 	" frames and right lines are 80 characters.
 
-    " Key     Command Name                Result
-    " ---     --------------------------  ----------------------------------------
-    " fcs     CommentFrameSlashes         border: //****************************//
-    " fcS     CommentFrameSlashStar       border: /******************************/
-    " fch     CommentFrameHashDash        border: #------------------------------#
-    " fcH     CommentFrameHashEqual       border: #==============================#
-    " fcq     CommentFrameQuoteDash       border: "------------------------------"
-    " fcQ     CommentFrameQuoteTilde      border: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	" Key     Command Name                Result
+	" ---     --------------------------  ----------------------------------------
+	" fcs     CommentFrameSlashes         border: //****************************//
+	" fcS     CommentFrameSlashStar       border: /******************************/
+	" fch     CommentFrameHashDash        border: #------------------------------#
+	" fcH     CommentFrameHashEqual       border: #==============================#
+	" fcq     CommentFrameQuoteDash       border: "------------------------------"
+	" fcQ     CommentFrameQuoteTilde      border: "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
-    " frh     CommentRightHash            line: #~~~~~~~~~~~~~~~~~~~~~ title ~~~~~
-    " frs     CommentRightSlashes         line: //~~~~~~~~~~~~~~~~~~~~ title ~~~~~
-    " frS     CommentRightSlashStar       line: /*~~~~~~~~~~~~~~~~~~ title ~~~~~*/
-    " frq     CommentRightQuote           line: "~~~~~~~~~~~~~~~~~~~~~ title ~~~~~
+	" frh     CommentRightHash            line: #~~~~~~~~~~~~~~~~~~~~~ title ~~~~~
+	" frs     CommentRightSlashes         line: //~~~~~~~~~~~~~~~~~~~~ title ~~~~~
+	" frS     CommentRightSlashStar       line: /*~~~~~~~~~~~~~~~~~~ title ~~~~~*/
+	" frq     CommentRightQuote           line: "~~~~~~~~~~~~~~~~~~~~~ title ~~~~~
 
-Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'AndrewRadev/splitjoin.vim'
 	" gS - split
 	" gJ - join
 
@@ -371,24 +444,156 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'maxbrunsfeld/vim-yankstack'
 	let g:yankstack_map_keys = 0
 	let g:yankstack_yank_keys = ['y']
-	nmap <A-o> <Plug>yankstack_substitute_older_paste
-	xmap <A-o> <Plug>yankstack_substitute_older_paste
-	imap <A-o> <Plug>yankstack_substitute_older_paste
+	nmap <A-p> <Plug>yankstack_substitute_older_paste
+	xmap <A-p> <Plug>yankstack_substitute_older_paste
+	imap <A-p> <Plug>yankstack_substitute_older_paste
 	nmap <A-i> <Plug>yankstack_substitute_newer_paste
 	xmap <A-i> <Plug>yankstack_substitute_newer_paste
 	imap <A-i> <Plug>yankstack_substitute_newer_paste
 
-Plug 'mattn/webapi-vim'
+" Plug 'mattn/webapi-vim'
 " Plug 'mattn/vim-gist'
 
 " Переключение между заголовочными и исходными файлами
 Plug 'linluk/vim-c2h'
 	" ,ch
 
+" SQL
+Plug 'joereynolds/SQHell.vim'
+	au FileType sql,mysql nnoremap <buffer> <leader>cc
+		\ :r !mysql -unvx -ppassword -h localhost <<< `cat %` \| column -t<cr>
+	au FileType sql,mysql nnoremap <buffer> <leader>e :SQHExecute<cr>
+	au FileType sql,mysql nnoremap <buffer> <leader>E :SQHExecute!
+	au FileType sql,mysql vnoremap <buffer> <leader>e :SQHExecute<cr>
+
+	let g:sqh_provider       = 'mysql'
+	let g:sqh_results_output = 'smart'
+	let g:sqh_connections    = {
+\		'default': {
+\			'user':     'nvx',
+\			'password': 'password',
+\			'host':     'localhost',
+\			'database': 'film'
+\		}
+\	}
+
+" " TODO list
+Plug 'aserebryakov/vim-todo-lists'
+	let g:VimTodoListsUndoneItem = '- [ ]'
+	let g:VimTodoListsDoneItem   = '- [X]'
+	let g:VimTodoListsMoveItems  = 1
+	
+	" VimTodoListsCreateNewItemAbove - creates a new item in a line above cursor
+	" VimTodoListsCreateNewItemBelow - creates a new item in a line below cursor
+	" VimTodoListsCreateNewItem      - creates a new item in current line
+	" VimTodoListsGoToNextItem       - go to the next item
+	" VimTodoListsGoToPreviousItem   - go to the previous item
+	" VimTodoListsToggleItem         - toggles the current item (or selected items in visual mode)
+	" VimTodoListsIncreaseIndent     - increases the indent of current line
+	" VimTodoListsDecreaseIndent     - decreases the indent of current line
+
+	" Default mapping
+	" j           - go to next item
+	" k           - go to previous item
+	" O           - create new item above the cursor
+	" o           - create new item below the cursor
+	" <Space>     - toggle current item
+	" <CR>        - create new item in insert mode
+	" <Tab>       - increases the indent of current (or selected) line(s)
+	" <Shift-Tab> - decreases the indent of current (or selected) line(s)
+	" <leader>e   - switch to normal editing mode
+
+	let g:VimTodoListsCustomKeyMapper = 'VimTodoListsCustomMappings'
+	let g:VimTodoListsDatesEnabled    = 1
+
+	function! VimTodoListsCustomMappings()
+		nnoremap <buffer> <silent> <leader>O :VimTodoListsCreateNewItemAbove<CR>
+		nnoremap <buffer> <silent> <O        :VimTodoListsCreateNewItemAbove<CR>
+		nnoremap <buffer> <silent> <leader>o :VimTodoListsCreateNewItemBelow<CR>
+		nnoremap <buffer> <silent> <Space>   :VimTodoListsToggleItem<CR>
+		noremap  <buffer> <silent> >>        :VimTodoListsIncreaseIndent<CR>
+		noremap  <buffer> <silent> <tab>     :VimTodoListsIncreaseIndent<CR>
+		noremap  <buffer> <silent> <<        :VimTodoListsDecreaseIndent<CR>
+	endfunction
+
+" Чтобы в больших вайлах свёртка кода не перерасчитывалась при введение
+" каждого символа
+Plug 'Konfekt/FastFold'
+
+" Добавление заголовка
+Plug 'alpertuna/vim-header'
+	let g:header_field_author       = 'nvxden'
+	let g:header_field_author_email = 'nvxden@pm.me'
+
+" colorschemes
+Plug 'kristijanhusak/vim-hybrid-material' " Металлический Джейкобс,           прозрачная *
+	let g:enable_italic_font = 1
+	let g:hybrid_transparent_background = 1
+Plug 'sainnhe/sonokai'                    " Самурайская тема,                 прозрачная *
+Plug 'sainnhe/gruvbox-material'           " Джейкобс, тёплая,               непрозрачная *
+Plug 'whatyouhide/vim-gotham'             " Очень тёмная,                   непрозрачная *
+Plug 'danilo-augusto/vim-afterglow'       " Тусклая,                        непрозрачная
+Plug 'AlessandroYorba/Alduin'             " Алдуиновская, зеленоватая,      непрозрачная *
+Plug 'romainl/Apprentice'                 " Болотная,                       непрозрачная
+Plug 'Badacadabra/vim-archery'            " Арч, чёрный фон, тёмно-синяя,   непрозрачная
+Plug 'challenger-deep-theme/vim'          " Тёмная, но контраснтная,        непрозрачная *
+Plug 'tyrannicaltoucan/vim-deep-space'    " Космическая,                      прозрачная
+Plug 'ajmwagar/vim-deus'                  " Grouvbox copy,                  непрозрачная
+Plug 'wadackel/vim-dogrun'                " Пришельческая, сине-фиолетовая, непрозрачная *
+
+Plug 'chase/focuspoint-vim'               " Фермерская, зелёная,            непрозрачная
+Plug 'jaredgorski/fogbell.vim'            " Будто старый чёрноблеый фильм,  непрозрачная *
+Plug 'yorickpeterse/happy_hacking.vim'    " Простая, приятная,              непрозрачная
+Plug 'cocopon/iceberg.vim'                " Холодная, ледяная,              непрозрачная *
+Plug 'scheakur/vim-scheakur'              " Земляная,                       непрозрачная *
+Plug 'w0ng/vim-hybrid'                    " Чёткая, средней тёплости,       непрозрачная
+Plug 'nanotech/jellybeans.vim'            " Морская, с водорослями,         непрозрачная
+Plug 'jonathanfilip/vim-lucius'           " Серо-светлая, вечерний асфальт, непрозрачная *
+Plug 'dikiaap/minimalist'                 " Тёмная земля, простая,          непрозрачная *
+
+Plug 'tomasr/molokai'                     " Похожа на sonokai, но темнее, непрозрачная
+Plug 'fmoralesc/molokayo'                 " Как molokai, но светлее,      непрозрачная
+Plug 'liuchengxu/space-vim-dark'          " Зеленоватая,                  непрозрачная
+Plug 'jaredgorski/SpaceCamp'              " Яркая, зеленоватая,           непрозрачная *
+Plug 'jacoborus/tender.vim'               " Приятная, жёлто-оранжевая,    непрозрачная
+Plug 'marcopaganini/termschool-vim-theme' " Яркая, простая,               непрозрачная
+Plug 'vim-scripts/twilight256.vim'        " Жёлто-зелёная, тёмная,          прозрачная *
+Plug 'rakr/vim-two-firewatch'             " Тёмная с кожанным оттенком,   непрозрачная *
+Plug 'vim-scripts/wombat256.vim'          " Постная,                      непрозрачная
+Plug 'arcticicestudio/nord-vim'           " Яркая,                          прозрачная
+Plug 'mhartington/oceanic-next'           " Крабовая,                     непрозрачная *
+
+Plug 'glepnir/oceanic-material'           " Свежая, океаническая с крабами, непрозрачная *
+Plug 'rakr/vim-one'                       " Тёмная с фиолетовым, непрозрачная
+Plug 'joshdick/onedark.vim'               " То же, что one, но светлее и приятнее, непрозрачная
+Plug 'vim-scripts/rdark-terminal2.vim'    " Приятная, зелёно-голубая, прозрачная *
+Plug 'junegunn/seoul256.vim'              " Светлая, вебеленная, приятная, непрозрачная
+Plug 'AlessandroYorba/Sierra'             " Вишнявая, тёмная, приятная, непрозрачная *
+Plug 'sonph/onehalf'                      " 
+Plug 'kyoz/purify'                        " 
+
 call plug#end()
 
 filetype on
-colorscheme gruvbox-material " цветовая схема
+
+" Цветовая схема
+" colorscheme sonokai
+" colorscheme hybrid_material
+" colorscheme gruvbox-material
+" colorscheme gotham256
+" colorscheme dogrun
+" colorscheme deep-space
+" colorscheme challenger_deep
+" colorscheme scheakur
+" colorscheme lucius
+" colorscheme minimalist
+" colorscheme pablo 
+" colorscheme pable
+" syntax enable
+
+" set termguicolors
+let g:alduin_Shout_Dragon_Aspect   = 1
+colorscheme alduin
 
 
 
@@ -399,27 +604,58 @@ colorscheme gruvbox-material " цветовая схема
 "''''''''''''''''''''''' MAPPINGS ''''''''''''''''''''''''''
 
 " NORMAL AND VISUAL MODE MAPPINGS
-" окна
-nnoremap } <C-w>>
-nnoremap { <C-w><
+" окна (windows)
+
+" перемещение между окнами
 nnoremap H <C-w>h
 nnoremap J <C-w>j
 nnoremap K <C-w>k
 nnoremap L <C-w>l
+
+" Изменение размеров окон
+nnoremap } <C-w>>
+nnoremap { <C-w><
+nnoremap <leader>w= <C-w>=
+nnoremap <leader>w\| <C-w>\|
+
+" Перемещение окон
 nnoremap <C-q> <C-w>x
+nnoremap <leader>wh <C-w>H
+nnoremap <leader>wj <C-w>J
+nnoremap <leader>wk <C-w>K
+nnoremap <leader>wl <C-w>L
+
+nnoremap <leader>wt <C-w>T
+nnoremap <leader>wr <C-w>R
+nnoremap <leader>ws <C-w>x
+
+" перемещение между вкладками
+nnoremap <C-h> gT
+nnoremap <BS>  gT
+nnoremap <C-l> gt
+
+" открытие новых окон
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-f> :tabnew<space>
-nnoremap <C-h> gT
-nnoremap <BS> gT
-nnoremap <C-l> gt
+nnoremap \     :vnew<CR>
+nnoremap \|    :new<CR>
+
+" закрытие окон
 nnoremap gq :q!<CR>
-nnoremap gQ :wq<CR>
-nnoremap \ :vnew<CR>
-nnoremap \| :new<CR>
-nnoremap <SPACE> S
+nnoremap gQ :qa!<CR>
 
 nnoremap M J
 vnoremap M J
+
+
+
+" tabs
+nnoremap <leader>th :-tabmove<CR>
+nnoremap <leader>tl :+tabmove<CR>
+nnoremap <leader>tk :0tabmove<CR>
+nnoremap <leader>tj :$tabmove<CR>
+nnoremap <leader>W  :set wrap!<CR>
+
 
 
 " перемещения
@@ -441,7 +677,7 @@ nnoremap ]B :blast<CR>
 
 
 " операции со всем файлом
-nnoremap <C-s> :source .open.vim<cr>
+nnoremap <C-s> :source .open.vim<CR>
 nnoremap <leader>m :w<CR>
 nnoremap <leader>M :wa<CR>
 nnoremap <leader>dh :%!mdtohtml --html4tags <CR>
@@ -450,9 +686,13 @@ nnoremap <leader>dy :%y"<CR>
 nnoremap <leader>dY :%y+<CR>
 nnoremap <leader>dm :Man<SPACE>
 nnoremap <leader>dd :!!<CR>
-nnoremap <leader>dv :tabnew $vimrc<CR>
-nnoremap <silent> <leader>ds :set expandtab<CR>:exe "1,$!retab -a t2s -t" . &tabstop<CR>
-nnoremap <silent> <leader>dt :set noexpandtab<CR>:exe "1,$!retab -a s2t -t" . &tabstop<CR>
+nnoremap <leader>dv :e $vimrc<CR>
+nnoremap <leader>dV :tabnew $vimrc<CR>
+nnoremap <leader>dR :source $vimrc<CR>
+nnoremap <silent> <leader>ds :set expandtab<CR>
+	\ :exe "1,$!retab -a t2s -t" . &tabstop<CR>
+nnoremap <silent> <leader>dt :set noexpandtab<CR>
+	\ :exe "1,$!retab -a s2t -t" . &tabstop<CR>
 vnoremap <silent> <leader>ds :'<,'>!retab t2s<CR>
 vnoremap <silent> <leader>dt :'<,'>!retab s2t<CR>
 
@@ -473,10 +713,10 @@ nnoremap <leader>p :wa<CR>:make clean<CR>
 
 
 " INSERT MODE MAPPINGS
-
 inoremap <C-l> <delete>
 inoremap <C-o> <esc>gUiwe
-inoremap <C-d> <esc>:call Switch()<CR>a
+inoremap <C-d> <esc>:call SwitchLanguage()<CR>a
+inoremap JK <esc>S
 
 " чтобы ставить ударения
 inoremap <C-v> <C-v>u0301
@@ -492,11 +732,21 @@ let g:python_recommended_style = 0
 let g:rust_recommended_style   = 0
 
 " Common
-au FileType c,cpp,java,js,php,python,glsl syntax match Function /\I\i\+\s*(\@=/
-au FileType c,cpp,java,js,php,python,glsl syntax match Type /[a-zA-Z0-9_]\@<!\I\i\+_t[a-zA-Z0-9_]\@!/
-au FileType c,cpp,java,js,php,python,glsl syntax match Identifier /\(#.*\)\@<![a-zA-Z0-9_]\@<!_*[A-Z][a-zA-Z0-9_]\+[a-zA-Z0-9_]\@!/
-au FileType c,cpp,java,js,php,python,glsl syntax match Constant /\(#.*\)\@<![a-zA-Z0-9_]\@<![A-Z][A-Z0-9_]*[a-zA-Z0-9_]\@!/
-au FileType c,cpp,java,js,php,python,glsl syntax match Constant /\(#.*\)\@<![a-zA-Z0-9_]\@<!_\+[A-Z0-9][A-Z0-9_]*[a-zA-Z0-9_]\@!/
+au FileType c,cpp,java,js,php,python,glsl syntax match
+	\ Function   /\I\i\+\s*(\@=/
+au FileType c,cpp,java,js,php,python,glsl syntax match
+	\ Type       /[a-zA-Z0-9_]\@<!\I\i\+_t[a-zA-Z0-9_]\@!/
+au FileType c,cpp,java,js,php,python,glsl syntax match
+	\ Type       /[a-zA-Z0-9_]\@<!t_\i\+[a-zA-Z0-9_]\@!/
+au FileType c,cpp,java,js,php,python,glsl syntax match
+	\ Identifier /\(#.*\)\@<![a-zA-Z0-9_]\@<!_*[A-Z][a-zA-Z0-9_]\+[a-zA-Z0-9_]\@!/
+au FileType c,cpp,java,js,php,python,glsl syntax match
+	\ Constant   /\(#.*\)\@<![a-zA-Z0-9_]\@<![A-Z][A-Z0-9_]*[a-zA-Z0-9_]\@!/
+au FileType c,cpp,java,js,php,python,glsl syntax match
+	\ Constant   /\(#.*\)\@<![a-zA-Z0-9_]\@<!_\+[A-Z0-9][A-Z0-9_]*[a-zA-Z0-9_]\@!/
+
+au FileType vim nnoremap <leader>e :exec getline('.')<cr>
+au FileType vim vnoremap <leader>e :<c-u>exec join(getline("'<", "'>"), "\n")<cr>
 
 " CPP, C
 au FileType cpp syntax keyword Type byte ubyte ushort uint ulong llong ull ullong ldouble id_t
@@ -714,13 +964,17 @@ au FileType rust compiler! cargo
 
 " <leader>q ???
 " <leader>Q ???
-" <leader>w US easy-motion к началу слова после
-" <leader>W US easy-motion к началу СЛОВА после
+" <leader>w US h -> <C-w>H, j -> <C-w>J, k -> <C-w>K, l -> <C-w>L, t -> <C-w>T
+" <leader>W US SwitchWrap
 " <leader>e US easy-motion к конца слова после, py: Ju run visual
 " <leader>E US easy-motion к конца СЛОВА после
 " <leader>r US make run; rust: run, py: !python3 main.py
 " <leader>R US make re;  rust: run --release
-" <leader>t ???
+" <leader>t US
+"              h -> :-tabmove
+"              l -> :+tabmove
+"              k -> :0tabmove
+"              j -> :$tabmove
 " <leader>T ???
 " <leader>y ???
 " <leader>Y ???
