@@ -1,55 +1,60 @@
 # ------------------------------------------
 snippet default_template
-cflags  := -std=gnu++17 -c -Wall
-ldflags :=
-libs    :=
+ex      := main
+srcdirs := src src/lib
+hdrdirs := src/include src/lib/include
+cflags  := -c -Wall -Wextra -Werror -Ofast
+targdir := target
+
+srcs := $(wildcard $(addsuffix /*.c,$(srcdirs)))
+objs := $(patsubst %.c,%.o,$(srcs))
+objs := $(patsubst src/%,$(targdir)/%,$(objs))
+dirs := $(dir $(objs))
+incl := $(addprefix -I,$(hdrdirs))
 
 
 
 
+# common
+all: build
 
-# main
-build: main
+build: $(ex)
 
-run: main
-	main 
+run: build
+	./$(ex)
 
+re: fclean build
 
-re: clean build
-
-rerun: clean run
-
-
-source_dirs     := src
-header_dirs     := src/lib
-search_wildcard := $(wildcard $(addsuffix /*.cpp,$(source_dirs)))
-object_files    := $(patsubst %.cpp,%.o,$(search_wildcard))
-object_files    := $(notdir $(object_files))
-object_files    := $(addprefix target/,$(object_files))
-VPATH           := $(source_dirs)
-
-main: ./target $(object_files)
-	g++ $(ldflags) -o $@ $(object_files) $(libs)
-
-./target:
-	if ! [ -d ./target ]; then mkdir target; fi
-
-target/%.o: %.cpp
-	g++ $(cflags) -o $@ -MD $(addprefix -I,$(header_dirs)) $<
-
-include $(wildcard target/*.d)
+rerun: fclean run
 
 
 
-# clean
+# compilation and linking
+$(ex): $(dirs) $(objs)
+	gcc -o $@ $(objs)
+
+$(targdir)/%.o: src/%.c
+	gcc -o $@ $(cflags) $(incl) -MD $<
+
+%/: # don't works on mac, remove '/'
+	mkdir -p $@
+
+include $(shell if [ -d $(targdir) ]; then find $(targdir) -name "*.d"; fi)
+
+
+
+# accesory
 clean:
-	-rm -r target main
+	rm -rf $(targdir)
+
+fclean: clean
+	rm -f $(ex)
+
+.PHONY: all build run re rerun test clean fclean
 
 
 
-
-
-# end
+# END
 endsnippet
 # --------
 

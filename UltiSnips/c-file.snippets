@@ -1,0 +1,68 @@
+snippet fopen
+FILE *file = fopen(${1:INPUT_FILE_NAME}, "${2:r}");
+endsnippet
+# --------
+
+snippet fopenr
+FILE *file = fopen(${1:INPUT_FILE_NAME}, "${2:r}");
+endsnippet
+# --------
+
+snippet fopenw
+FILE *file = fopen(${1:OUTPUT_FILE_NAME}, "${2:w}");
+endsnippet
+# --------
+
+snippet "\bfl " "fflush" brA
+fflush({${1:stdout});$0
+endsnippet
+# --------
+
+snippet "\bsfl " "fflush stdout" brA
+fflush(stdout);$0
+endsnippet
+# --------
+
+snippet "\bpr " "printf" brA
+printf("$1"$2);$0
+endsnippet
+# --------
+
+snippet "\bprn " "printf endl" brA
+printf("$1\n"$2);$0
+endsnippet
+# --------
+
+snippet "\bepr " "printf stderr" brA
+fprintf(stderr, "$1"$2);$0
+endsnippet
+# --------
+
+snippet "\beprn " "printf stderr endl" brA
+fprintf(stderr, "$1\n"$2);$0
+endsnippet
+# --------
+
+snippet "\bsc " "scanf" brA
+scanf("%$1", $2);$0
+endsnippet
+# --------
+
+snippet "\bscn " "scanf n" brA
+scanf("%i", &n);$0
+endsnippet
+# --------
+
+snippet begrep
+fclose( fopen("report", "w") );$0
+endsnippet
+# --------
+
+snippet rep
+{
+	auto file = fopen("report", "a");
+	fprintf(file, "$1\n"$2);
+	fclose(file);
+}
+endsnippet
+# --------

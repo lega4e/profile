@@ -2,6 +2,11 @@ priority 2
 
 extends c-like-for
 extends c-like-comments
+extends c-like-control
+extends c-macros
+extends c-types
+extends c-file
+extends c-struct
 
 
 
@@ -11,111 +16,10 @@ extends c-like-comments
 # -----------------------------------------------
 # directives
 
-snippet ignpr
-#pragma GCC diagnostic ignored "-Wparentheses"
-endsnippet
-# --------
-
-snippet inc
-#include <${1:iostream}>$0
-endsnippet
-# --------
-
-snippet inc<
-#include <${1:iostream}>$0
-endsnippet
-# --------
-
-snippet incc
-#include "$1"$0
-endsnippet
-# --------
-
-snippet ifdeb
-#ifdef DEBUG
-	$1
-#endif$0
-endsnippet
-# --------
-
-snippet ifedeb
-#ifdef DEBUG
-	$1
-#else
-	$2
-#endif$0
-endsnippet
-# --------
-
-snippet guard
-#ifndef $1
-#define $1
-
-
-
-
-
-$0
-
-
-
-
-
-#endif
-endsnippet
-# --------
-
-snippet ponce
-#pragma once
-
-
-
-
-
-$0
-
-
-
-
-
-// end
-endsnippet
-# --------
-
-snippet defname
-#define $1 ($2)
-	$0
-#undef $1
-endsnippet
-# --------
-
 snippet usn
 using namespace ${1:std};$0
 endsnippet
 # --------
-
-
-
-
-
-# -----------------------------------------------
-# typedefs
-
-snippet llong
-typedef long long llong;
-endsnippet
-# --------
-
-snippet ullong
-typedef unsigned long long ullong;
-endsnippet
-
-snippet ldouble
-typedef long double ldouble;
-endsnippet
-# --------
-
-
 
 
 
@@ -205,159 +109,6 @@ endsnippet
 
 
 
-
-# -----------------------------------------------
-# c-streams
-
-snippet fopen
-auto file = fopen(${1:INPUT_FILE_NAME}, "${2:r}");
-endsnippet
-# --------
-
-snippet fopenr
-auto file = fopen(${1:INPUT_FILE_NAME}, "${2:r}");
-endsnippet
-# --------
-
-snippet fopenw
-auto file = fopen(${1:OUTPUT_FILE_NAME}, "${2:w}");
-endsnippet
-# --------
-
-snippet fl
-fflush({${1:stdout});$0
-endsnippet
-# --------
-
-snippet sfl
-fflush(stdout);$0
-endsnippet
-# --------
-
-snippet pr
-printf("$1"$2);$0
-endsnippet
-# --------
-
-snippet prn
-printf("$1\n"$2);$0
-endsnippet
-# --------
-
-snippet epr
-fprintf(stderr, "$1"$2);$0
-endsnippet
-# --------
-
-snippet eprn
-fprintf(stderr, "$1\n"$2);$0
-endsnippet
-# --------
-
-snippet prarr
-printf("$1: ");
-for (auto *b = $1, *e = $1+$2; b != e; ++b)
-	printf("%${3:i} ", *b);
-printf("\n");$0
-endsnippet
-# --------
-
-snippet prbe
-printf("$1: ");
-for (auto b = $1cbegin(), e = $1cend(); b != e; ++b)
-	printf("%${3:i} ", *b);
-printf("\n");$0
-endsnippet
-# --------
-
-
-snippet sc
-scanf("%$1", $2);$0
-endsnippet
-# --------
-
-snippet scn
-scanf("%i", &n);$0
-endsnippet
-# --------
-
-snippet scarr
-for (auto b = ${1:a}, e = $1+${2:n}; b != e; ++b)
-	scanf("%${3:i}", b);
-endsnippet
-# --------
-
-
-snippet cinput
-{
-	auto file = fopen(${1:INPUT_FILE_NAME}, "r");
-	$0
-	fclose(file);
-}
-endsnippet
-# --------
-
-snippet cinputc
-// input
-{
-	auto file = fopen(${1:INPUT_FILE_NAME}, "r");
-	$0
-	fclose(file);
-}
-endsnippet
-# --------
-
-snippet coutput
-{
-	auto file = fopen(${1:OUTPUT_FILE_NAME}, "w");
-	$0
-	fclose(file);
-}
-endsnippet
-# --------
-
-snippet coutputc
-// output
-{
-	auto file = fopen(${1:OUTPUT_FILE_NAME}, "w");
-	$0
-	fclose(file);
-}
-endsnippet
-# --------
-
-
-
-snippet begrep
-fclose( fopen("report", "w") );$0
-endsnippet
-# --------
-
-snippet rep
-{
-	auto file = fopen("report", "a");
-	fprintf(file, "$1\n"$2);
-	fclose(file);
-}
-endsnippet
-# --------
-
-
-
-
-
-
-
-# -----------------------------------------------
-# struct
-
-snippet sct
-struct $1
-{
-	$0
-};
-endsnippet
-# --------
 
 snippet cls
 class $1
@@ -616,7 +367,7 @@ template<typename T, typename U> struct IF<false, T, U>
 endsnippet
 # --------
 
-snippet argument_type
+snippet arg_t
 typedef typename IF<
 	std::is_fundamental<
 		typename std::remove_pointer< value_type >::type
@@ -625,12 +376,12 @@ typedef typename IF<
 	typename std::add_lvalue_reference<
 		typename std::add_const< value_type >::type
 	>::type
->::type argument_type;
+>::type arg_t;
 endsnippet
 # --------
 
-snippet result_type
-typedef decltype(T()*U()) result_type;
+snippet ret_t
+typedef decltype(T()*U()) res_t;
 endsnippet
 # --------
 
@@ -664,11 +415,6 @@ for (auto $2 = $1begin(), $3 = $1end(); $2 != $3; ++$2)$0
 endsnippet
 # --------
 
-snippet forcbe
-for (auto b = $1cbegin(), e = $1cend(); b != e; ++b)$0
-endsnippet
-# --------
-
 snippet forbbee
 for (auto bb = $1begin(), ee = $1end(); bb != ee; ++bb)$0
 endsnippet
@@ -683,13 +429,6 @@ snippet forpbe
 for (auto *b = $1, *e = $1+$2; b != e; ++b)$0
 endsnippet
 # --------
-
-snippet forcpbe
-for (auto const *b = $1, *e = $1+$2; b != e; ++b)$0
-endsnippet
-# --------
-
-
 
 
 
@@ -736,106 +475,6 @@ int main( int argc, char *argv[] )
 	$0
 
 
-
-	return 0;
-}
-
-
-
-
-
-// end
-endsnippet
-# --------
-
-
-snippet fstream_template
-#include <iostream>
-#include <fstream>
-
-
-using namespace std;
-
-
-
-
-
-// objects
-char const *INPUT_FILE_NAME = "INPUT.TXT";
-char const *OUTPUT_FILE_NAME = "OUTPUT.TXT";
-
-
-
-
-
-// main
-int main( int argc, char *argv[] )
-{
-	$0
-
-
-
-	return 0;
-}
-
-
-
-
-
-// end
-endsnippet
-# --------
-
-
-snippet c_template
-#include <cstdio>
-
-
-using namespace std;
-
-
-
-
-
-// main
-int main( int argc, char *argv[] )
-{
-	$0
-
-	return 0;
-}
-
-
-
-
-
-// end
-endsnippet
-# --------
-
-
-snippet c_fstream_template
-#include <cstdio>
-
-
-using namespace std;
-
-
-
-
-
-// objects
-constexpr char const *INPUT_FILE_NAME = "INPUT.TXT";
-constexpr char const *OUTPUT_FILE_NAME = "OUTPUT.TXT";
-
-
-
-
-
-// main
-int main( int argc, char *argv[] )
-{
-	$0
 
 	return 0;
 }

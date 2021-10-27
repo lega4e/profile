@@ -1,0 +1,23 @@
+snippet "\bsct " "struct" brA
+sturct $1
+{
+	$0
+};
+endsnippet
+# --------
+
+snippet "\bntsct " "typedef struct" brA
+typedef struct s_$1
+{
+	$0
+} t_$1;
+endsnippet
+# --------
+
+snippet "\btsct " "typedef struct" brA
+typedef struct $1_s
+{
+	$0
+} $1_t;
+endsnippet
+# --------

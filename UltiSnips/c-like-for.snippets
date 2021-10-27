@@ -5,7 +5,7 @@ priority 1
 
 
 
-snippet "for (\w)" "for" rb
+snippet "for (\w+)" "for" rb
 for (int `!p snip.rv = match.group(1)` = 0; `!p snip.rv = match.group(1)` < ${1:10}; ++`!p snip.rv = match.group(1)`)$0
 endsnippet
 # --------
@@ -15,7 +15,7 @@ for (int `!p snip.rv = match.group(1)` = 0, e = $1; `!p snip.rv = match.group(1)
 endsnippet
 # -------
 
-snippet "for (\w)(\w)" "double for" rb
+snippet "for (\w+) (\w+)" "double for" rb
 for (int `!p snip.rv = match.group(1)` = 0; `!p snip.rv = match.group(1)` < ${1:10}; ++`!p snip.rv = match.group(1)`)
 for (int `!p snip.rv = match.group(2)` = 0; `!p snip.rv = match.group(2)` < ${2:10}; ++`!p snip.rv = match.group(2)`)$0
 endsnippet

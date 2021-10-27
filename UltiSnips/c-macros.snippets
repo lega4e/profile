@@ -1,0 +1,32 @@
+snippet "^inc[ <]" "#include" brA
+#include <${0:stdio.h}>
+endsnippet
+# --------
+
+snippet "^incl " "#include-rel" brA
+#include "$0"
+endsnippet
+# --------
+
+snippet '^inc"' "#include-rel" brA
+#include "$0
+endsnippet
+# --------
+
+snippet "^guard " "guard" brA
+#ifndef $1
+# define $1
+
+
+
+
+
+$0
+
+
+
+
+
+#endif
+endsnippet
+# --------

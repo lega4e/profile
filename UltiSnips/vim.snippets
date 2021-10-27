@@ -4,3 +4,22 @@ snippet ctags
 :set tags+=.ctags
 endsnippet
 # --------
+
+snippet "fn " "function" bAr
+function $1($2)
+	$0
+endfunction
+endsnippet
+# --------
+
+snippet "if " "if" bAr
+if $1
+	$0
+endif
+endsnippet
+# --------
+
+snippet "c " "call" bAr
+call $1($0)
+endsnippet
+# --------
