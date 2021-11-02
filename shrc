@@ -4,6 +4,7 @@
 
 # source ~/.fzf.sh
 
+export TERM="screen-256color"
 export PATH=.:$PATH
 export PATH_TO_FX=/usr/share/openjfx/lib
 export PATH_TO_FX_MODS=/usr/share/openjfx/jmods
