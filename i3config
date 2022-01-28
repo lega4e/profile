@@ -144,7 +144,7 @@ bindsym $mod+o workspace  back_and_forth
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Launch application ~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
 # one-press launch
-bindsym $mod+Return  exec term
+bindsym $mod+comma   exec term
 bindsym Ctrl+$alt+a  exec flameshot gui
 bindsym $mod+x       exec tpdtgl
 bindsym $mod+Shift+x exec xkill
@@ -222,7 +222,6 @@ mode "launch" {
 bindsym $mod+i       mode       "focus"
 bindsym $mod+Shift+s move       scratchpad
 bindsym $mod+Shift+d scratchpad show
-bindsym $mod+Shift+p exec       gpick -s &
 
 mode "focus" {
 	bindsym a      [class="(?i)android.*"]   focus; mode "default"
@@ -303,27 +302,8 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
-
-# bar {
-	# status_command i3status -c ~/.config/i3status/config
-	# font pango:DejaVu Sans Mono Bold 10
-    # strip_workspace_numbers yes
-
-	# colors {
-		# background #000000
-		# statusline #ffffff
-		# separator #666666
-
-		# # Что-то не работает(
-		# focused_workspace  #4A1A57 #4A1A57 #ffffff
-		# active_workspace   #333333 #5f676a #ffffff
-		# inactive_workspace #333333 #222222 #888888
-		# urgent_workspace   #2f343a #900000 #ffffff
-	# }
-# }
-
 # background
-exec feh --bg-scale '/home/nvx/imgs/Рабочий стол/Тёмно-красное, туманность.png'
+exec feh --bg-scale ~/"imgs/Рабочий стол/Аниме/Кошкодевочка под дождём, фиолетовый.jpg"
 
 
 
