@@ -5,21 +5,30 @@ snippet ctags
 endsnippet
 # --------
 
-snippet "fn " "function" bAr
-function $1($2)
+snippet "\bfn\\" "function" bAr
+fun! $1
 	$0
-endfunction
+endfun
 endsnippet
 # --------
 
-snippet "if " "if" bAr
+snippet "\bif\\" "if" bAr
 if $1
 	$0
 endif
 endsnippet
 # --------
 
-snippet "c " "call" bAr
-call $1($0)
+snippet "\bfor\\" "for" bAr
+for $1 in $2
+	$0
+endfor
+endsnippet
+# --------
+
+snippet "\bwhile\\" "while" bAr
+while $1
+	$0
+endwhile
 endsnippet
 # --------

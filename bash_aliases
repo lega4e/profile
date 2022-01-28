@@ -2,15 +2,15 @@
 alias please=sudo
 alias pls=sudo
 
-alias l='ls   -v --group-directories-first --color=always'
-alias ls='ls  -v --group-directories-first --color=always'
-alias sl='ls  -v --group-directories-first --color=always'
-alias ll='ls  -v --group-directories-first --color=always -l'
-alias la='ls  -v --group-directories-first --color=always -a'
+alias l='ls   -v --group-directories-first --color=auto'
+alias ls='ls  -v --group-directories-first --color=auto'
+alias ll='ls  -v --group-directories-first --color=auto -l'
+alias la='ls  -v --group-directories-first --color=auto -a'
 
 alias lla='ls -v --group-directories-first --color=always -la'
 alias tree='tree --dirsfirst -v'
 alias sort='sort -V'
+alias mmeta='mmeta -v'
 
 alias pud='pushd'
 alias pd='pushd'
@@ -49,9 +49,12 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
 # git
-alias gs="git status"
+alias gs="git status -s"
 alias gp="git push"
 alias ga="git add"
+alias gc="git commit"
+alias gl="git log -3"
+alias gln="git log"
 alias gpl="git pull"
 
 
@@ -60,10 +63,6 @@ alias github="firefox https://github.com/clever411?tab=repositories"
 alias habr="firefox https://habr.com/"
 alias vk="firefox https://vk.com/feed"
 alias graph="firefox https://www.desmos.com/calculator"
-
-# ru
-alias св="cd";
-alias ьм="mv";
 
 # vim
 alias vim='nvim'

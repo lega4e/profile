@@ -26,12 +26,12 @@ endsnippet
 
 snippet "(fc|ох) ((\w+\s*)+)" "fat comment" rb
 `!p
-c = 60 - 4 - len(match.group(2))
+c = 70 - 4 - len(match.group(2))
 snip.rv = '/*' + '*' * (c - c//2) + ' ' + match.group(2).upper() + ' ' + '*' * (c//2) + '*/'
 `
 endsnippet
 
-snippet "\b(cs|хи)\" "beautiful comment" rbA
+snippet "\b(cs|хи)\\" "beautiful comment" rbA
 /*
  * $0
  */

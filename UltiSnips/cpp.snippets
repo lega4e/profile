@@ -1,12 +1,11 @@
 priority 2
 
-extends c-like-for
-extends c-like-comments
-extends c-like-control
-extends c-macros
-extends c-types
 extends c-file
+extends c-like-comments
+extends c-like-for
+extends c-macros
 extends c-struct
+extends c-types
 
 
 
@@ -33,21 +32,10 @@ cout << $1 << endl;
 endsnippet
 # --------
 
-snippet con
-cout << $1 << '\n';
-endsnippet
-# --------
-
 snippet cob
 cout << "$1" << endl;
 endsnippet
 # --------
-
-snippet conb
-cout << "$1" << '\n';
-endsnippet
-# --------
-
 
 snippet cout
 std::cout << $1 << std::endl;$0

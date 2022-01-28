@@ -21,7 +21,7 @@ endsnippet
 
 snippet "(fc|ох) ((\w+\s*)+)" "fat comment" rb
 `!p
-c = 60 - 2 - len(match.group(2))
+c = 70 - 2 - len(match.group(2))
 snip.rv = '#' * (c - c//2) + ' ' + match.group(2).upper() + ' ' + '#' * (c//2)
 `
 endsnippet

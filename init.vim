@@ -1,19 +1,29 @@
-" ######################################################################
-" ############################## COMMON ################################
-" ######################################################################
+" ########################################################################## "
+" ################################# COMMON ################################# "
+" ########################################################################## "
+"
+" Marks:
+"  V - begin of file
+"  p - plugins
+"  m - mapings
+"  f - filetypes
+"  d - docs
+"
 
 set encoding=utf-8
-set ttimeoutlen=0 " Чтобы не было задержек
+set ttimeoutlen=0 " чтобы не было задержек
 
 set autoread      " автоматически загружать внешние изменения файла
-set list          " отображать симоволы табуляции
+set nolist        " отображать симоволы табуляции
 set nohlsearch    " no highlight search result after <cr>
 set incsearch     " highlight search result while typing
+set ignorecase    " ignore case; neccessary for smartcase
+set smartcase     " smart case while searching
 set number        " нумерование строк
 set rnu           " relative number
 
 set scrolloff=10
-set scrollback=20000
+" set scrollback=20000
 
 set tabstop=4
 set softtabstop=0
@@ -41,7 +51,6 @@ set imsearch=0
 
 
 
-" Переключение языков
 fun! SwitchLanguage()
 	if &iminsert == 0
 		set iminsert=1
@@ -50,8 +59,7 @@ fun! SwitchLanguage()
 	endif
 endfunction
 
-" Удаление замыкающих пробелов
-fun! <SID>StripTrailingWhitespaces()
+fun! s:StripTrailingWhitespaces()
 	let l = line(".")
 	let c = col(".")
 	%s/\s\+$//e
@@ -59,7 +67,7 @@ fun! <SID>StripTrailingWhitespaces()
 	write
 endfun
 
-autocmd BufWrite <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd BufWrite <buffer> :call s:StripTrailingWhitespaces()
 autocmd BufRead if &buftype == "quickfix" <buffer> nnoremap o <cr> endif
 
 let g:mapleader=','
@@ -73,37 +81,14 @@ endif
 
 
 
-" ######################################################################
-" ############################## PLUGINS ###############################
-" ######################################################################
+" ########################################################################## "
+" ################################ PLUGINS ################################# "
+" ########################################################################## "
 
 call plug#begin('~/.config/nvim/autoload/plugged')
 
 
-" ########################### autocomplete #############################
-
-" Plug 'ycm-core/YouCompleteMe' " автодополнение
-		" " let g:ycm_clangd_binary_path = "/usr/bin/clangd"
-		" let g:ycm_global_ycm_extra_conf              = '~/.ycm_extra_conf.py'
-		" let g:ycm_confirm_extra_conf                 = 0
-		" let g:ycm_max_num_candidates                 = 50
-		" let g:ycm_key_list_select_completion         = [ '<tab>', '<down>', '<c-k>' ]
-		" let g:ycm_key_list_previous_completion       = [ '<up>' ]
-		" let g:ycm_auto_trigger                       = 1
-		" let g:ycm_min_num_of_chars_for_completion    = 2
-		" let g:ycm_show_diagnostics_ui                = 0
-		" let g:ycm_enable_diagnostic_signs            = 0
-		" let g:ycm_filter_diagnostics                 = { "cpp": { "level": "warning" } }
-		" let g:ycm_key_list_stop_completion           = ['']
-		" let g:ycm_key_invoke_completion              = '<c-space>'
-		" let g:ycm_semantic_triggers                  = {
-			" \ 'c' : [ 're!\w{5,20}'],
-			" \ 'cpp' : [ 're!\w{5,20}']
-			" \ }
-		" set completeopt-=preview
-		" nnoremap gd :YcmCompleter GoTo<cr>
-		" nnoremap gs :YcmCompleter GoToSymbol<space>
-
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	" does't slow down
 	if !has('macunix')
@@ -183,9 +168,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 " EOF
 
 
-" ############################## widgets ###############################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ widgets ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
-	" Plug 'vim-airline/vim-airline'
+	Plug 'vim-airline/vim-airline'
 	" Plug 'powerline/powerline'
 
 	" does't slow down
@@ -265,8 +250,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	" Smooth scroll
 	" can slow down (with pulse)
 	" Plug 'terryma/vim-smooth-scroll'
-		" nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 2, 2)<cr>
-		" nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 2, 2)<cr>
+		" nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 4, 3)<cr>
+		" nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 4, 3)<cr>
 
 	" can slow down (with smooth)
 	" Plug 'inside/vim-search-pulse'
@@ -279,9 +264,28 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	" does't slow down
 	Plug 'junegunn/gv.vim'
 
+	Plug 'junegunn/goyo.vim'
+		let g:goyo_width  = 83
+		let g:goyo_linenr = 1
+		let g:goyo_height = '93%'
+		nnoremap <leader>z :Goyo<cr>
+		nnoremap <leader>Z :Goyo<cr>:Goyo<cr>
+
+		fun! s:goyo_enter()
+			hi EndOfBuffer ctermfg=236
+		endfun
+
+		fun! s:goyo_leave()
+			call tabber#init()
+			set tabline=%!tabber#TabLine()
+		endfun
+
+		au! User GoyoEnter nested call s:goyo_enter()
+		au! User GoyoLeave nested call s:goyo_leave()
 
 
-" ############################# editing ################################
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ editing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	" does't slow down
 	Plug 'SirVer/ultisnips'
@@ -299,11 +303,15 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		" в команде yss вместо последней s можно исполизовать сочетания типа iw,aw...
 
 	" does't slow down
+
 	Plug 'jiangmiao/auto-pairs'
 		let g:AutoPairs = { "[" : "]", "{" : "}", "'":"'", '"':'"', "`":"`",
-	\									'```':'```', '"""':'"""', "'''":"'''" }
-		nnoremap <leader>A :call AutoPairsToggle()<cr>
-		" let g:AutoPairsShortcutToggle = '<nop>'
+	    \                 '```':'```', '"""':'"""', "'''":"'''" }
+		let g:AutoPairsShortcutToggle     = ''
+		let g:AutoPairsShortcutFastWrap   = ''
+		let g:AutoPairsShortcutJump       = ''
+		let g:AutoPairsShortcutBackInsert = ''
+		nnoremap <leader>P :call AutoPairsToggle()<cr>
 
 	" does't slow down
 	Plug 'junegunn/vim-easy-align' " выравнивание
@@ -342,6 +350,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 	" does't slow down
 	Plug 'mattn/emmet-vim'
+		let g:user_emmet_install_global = 0
 		" >  child
 		" +  sibling
 		" ^  climb-up
@@ -369,25 +378,53 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	" does't slow down
 	Plug 'michaeljsmith/vim-indent-object'
 
-	" Plug 'AndrewRadev/splitjoin.vim'
-		" gS - split
-		" gJ - join
-
 	" does't slow down
 	Plug 'nvxden/vim-pretty-comments'
-		let g:nvxvpc_styles = [ 
-			\ [ "c,cpp,java:bold",   { 'filler' : '*', 'type'     : 'alt' } ],
-			\ [ "c,cpp,java:light",  { 'filler' : "-", 'closedef' : 1     } ],
-			\ [ "python,make:bold",  { 'filler' : '#', 'margin'   : 0     } ],
-			\ [ "python,make:light", { 'filler' : "'"                     } ],
+		let g:nvxvpc_default_margin   = 1
+		let g:nvxvpc_default_closedef = 1
+
+		let g:nvxvpc_styles = [
+			\ [ "light", {
+			\ 		'margin' : 1,
+			\ 		'filler' : '~',
+			\ 		'type'   : 'alt',
+			\ 		'align'  : 'center',
+			\ } ],
+			\
+			\ [ "bold", {
+			\ 		'margin' : 1,
+			\ 		'filler' : '=',
+			\ 		'type'   : 'alt',
+			\ 		'align'  : 'center',
+			\ } ],
+			\
+			\ [ "wrapped", {
+			\ 		'type'   : 'alt',
+			\ 		'header' : 1,
+			\ 		'footer' : 1,
+			\ 		'filler' : '~',
+			\ } ],
+			\
+			\ [ "wrapped_light", {
+			\     'extends'   : 'wrapped',
+			\ 		'fillleft'  : 0,
+			\ 		'fillright' : 0,
+			\ 		'padding'   : 5,
+			\ } ],
+			\
+			\ [ "wrapped_bold", {
+			\ 		'extends' : 'wrapped',
+			\ 		'filler'  : '=',
+			\ } ],
 		\]
 
 		nnoremap <leader>pc :call nvxvpc#insert_comment()<cr>
-		nnoremap <leader>pb :call nvxvpc#insert_comment('bold')<cr>
 		nnoremap <leader>pl :call nvxvpc#insert_comment('light')<cr>
+		nnoremap <leader>pb :call nvxvpc#insert_comment('bold')<cr>
+		nnoremap <leader>pw :call nvxvpc#insert_comment('wrapped_light')<cr>
+		nnoremap <leader>pW :call nvxvpc#insert_comment('wrapped_bold')<cr>
 		nnoremap <leader>pR :call nvxvpc#reload()<cr>
 
-		let g:nvxvpc_default_closedef = 1
 		" let g:nvxvpc_default_settings = {
 			" \ 'filler' : '%',
 			" \ 'align'  : 'right',
@@ -402,14 +439,25 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 
 
-" ####################### moving and navigation ########################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~ moving and navigation ~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	" does't slow down
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-		nnoremap gi :vnew<cr>:FZF<cr>
-		nnoremap gh :new<cr>:FZF<cr>
-		nnoremap gz :tabnew<cr>:FZF<cr>
-		nnoremap go :FZF<cr>
+
+		let g:fzf_source = 'find . -type f -not -path "*.git/*" ' .
+		                 \ '-not -name "*.[oda]" -not -name "main" | ' .
+		                 \ 'sed -e "s/\.\///" | sort -nr'
+
+		let g:fzf_options = {
+		\ 'sink': 'e',
+		\ 'source': fzf_source,
+		\ 'window': {'width': 0.9, 'height': 0.7}
+		\}
+
+		nnoremap gi :vnew<cr>:call fzf#run(g:fzf_options)<cr>
+		nnoremap gh :new<cr>:call fzf#run(g:fzf_options)<cr>
+		nnoremap gz :tabnew<cr>:call fzf#run(g:fzf_options)<cr>
+		nnoremap go :call fzf#run(g:fzf_options)<cr>
 
 	" does't slow down
 	Plug 'rking/ag.vim'
@@ -422,40 +470,133 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 	" " Plug 'kien/ctrlp.vim'
 
-	" Plug 'terryma/vim-multiple-cursors'
-		" let g:multi_cursor_use_default_mapping = 0
-		" let g:multi_cursor_start_word_key      = '<leader>mb'
-		" let g:multi_cursor_select_all_word_key = '<leader>ma'
-		" let g:multi_cursor_start_key           = '<leader>ms'
-		" let g:multi_cursor_select_all_key      = '<leader>mA'
-		" let g:multi_cursor_next_key            = '<C-n>'
-		" let g:multi_cursor_prev_key            = '<C-p>'
-		" let g:multi_cursor_skip_key            = '<C-m>'
-		" let g:multi_cursor_quit_key            = '<Esc>'
+	Plug 'terryma/vim-multiple-cursors'
+		let g:multi_cursor_use_default_mapping = 0
+		let g:multi_cursor_start_word_key      = '<leader>mb'
+		let g:multi_cursor_select_all_word_key = '<leader>ma'
+		let g:multi_cursor_start_key           = '<leader>ms'
+		let g:multi_cursor_select_all_key      = '<leader>mA'
+		let g:multi_cursor_next_key            = '<C-n>'
+		let g:multi_cursor_prev_key            = '<C-p>'
+		let g:multi_cursor_skip_key            = '<C-m>'
+		let g:multi_cursor_quit_key            = '<Esc>'
 		" nnoremap ms :MultipleCursorsFind<Space>
 		" vnoremap ms :MultipleCursorsFind<Space>
 
-	" " Plug 'paradigm/vim-multicursor'
-		" " nnoremap mp :<c-u>call MultiCursorPlaceCursor()<cr>
-		" " nnoremap mm :<c-u>call MultiCursorManual()<cr>
-		" " nnoremap mr :<c-u>call MultiCursorRemoveCursors()<cr>
-		" " vnoremap mp :<c-u>call MultiCursorVisual()<cr>
-		" " noremap  ms :call MultiCursorSearch('')<left><left>
-		" " let g:multicursor_quit = '<Esc>'
-
-	" Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 
 
-
-" ############################ technology ##############################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ technology ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	" does't slow down
 	Plug 'tikhomirov/vim-glsl' " Подсветка синтаксиса для GLSL
 		autocmd! BufNewFile,BufRead *.vs,*.fs,*.frag set ft=glsl
 
-	" packadd! vimspector
-		" let g:vimspector_enable_mappings = 'HUMAN'
-		" map <F22> :call vimspector#StepInto()<cr>
+	packadd! vimspector
+
+		fun! AddVimspectorMappings()
+			nnoremap q :call VimspectorReset()<cr>
+			nnoremap p :call vimspector#Pause()<cr>
+			nnoremap S :call vimspector#Stop()<cr>
+			nnoremap r :call vimspector#Restart()<cr>
+			nnoremap t :call vimspector#ToggleBreakpoint()<cr>
+			nnoremap T :call vimspector#ToggleConditionalBreakpoint()<cr>
+			nnoremap s :call vimspector#StepOver()<cr>
+			nnoremap I :call vimspector#StepInto()<cr>
+			nnoremap o :call vimspector#StepOut()<cr>
+			nnoremap c :call vimspector#Continue()<cr>
+			nnoremap C :call vimspector#RunToCursor()<cr>
+			nnoremap U :call vimspector#UpFrame()<cr>
+			nnoremap D :call vimspector#DownFrame()<cr>
+			nnoremap e :call vimspector#BalloonEval()<cr>
+		endfun
+
+		fun! RemoveVimspectorMappings()
+			nunmap q
+			nunmap p
+			nunmap S
+			nunmap R
+			nunmap t
+			nunmap T
+			nunmap s
+			nunmap I
+			nunmap o
+			nunmap c
+			nunmap C
+			nunmap U
+			nunmap D
+			nunmap e
+		endfun
+
+		fun! VimspectorLaunch()
+			call AddVimspectorMappings()
+			call vimspector#Launch()
+		endfun
+
+		fun! VimspectorReset()
+			call RemoveVimspectorMappings()
+			call vimspector#Reset()
+		endfun
+
+		nnoremap <M-t> :call vimspector#ToggleBreakpoint()<cr>
+		nnoremap <leader>vv :call VimspectorLaunch()<cr>
+		nnoremap <leader>vV :call VimspectorReset()<cr>
+		nnoremap <leader>vp :call vimspector#Pause()<cr>
+		nnoremap <leader>vc :call vimspector#Continue()<cr>
+		nnoremap <leader>vs :call vimspector#Stop()<cr>
+		nnoremap <leader>vr :call vimspector#Restart()<cr>
+		nnoremap <leader>vt :call vimspector#ToggleBreakpoint()<cr>
+		nnoremap <leader>vT :call vimspector#ToggleConditionalBreakpoint()<cr>
+		nnoremap <leader>vC :call vimspector#RunToCursor()<cr>
+		nnoremap <leader>vo :call vimspector#StepOver()<cr>
+		nnoremap <leader>vi :call vimspector#StepInto()<cr>
+		nnoremap <leader>vO :call vimspector#StepOut()<cr>
+		nnoremap <leader>vu :call vimspector#UpFrame()<cr>
+		nnoremap <leader>vd :call vimspector#DownFrame()<cr>
+		nnoremap <leader>ve :call vimspector#BalloonEval()<cr>
+
+		" Каждая команда начинается с <Plug>Vimspector, например
+		" <Plug>VimspectorStop (но здесь опущено для краткости)
+		" Continue                    # When debugging, continue. Otherwise
+		"                             # start debugging. vimspector#Continue()
+
+		" Stop                        # Stop debugging. vimspector#Stop()
+
+		" Restart                     # Restart debugging with the same
+		"                             # configuration. vimspector#Restart()
+
+		" Pause                       # Pause debuggee. vimspector#Pause()
+
+		" ToggleBreakpoint            # Toggle line breakpoint on the current
+		"                             # line. vimspector#ToggleBreakpoint()
+
+		" ToggleConditionalBreakpoint # Toggle conditional line breakpoint or
+		"                             # logpoint on the current line.
+		"                             # vimspector#ToggleBreakpoint( { trigger
+		"                             # expr, hit count expr } )
+
+		" AddFunctionBreakpoint       # Add a function breakpoint for the
+		"                             # expression under cursor
+		"                             # vimspector#AddFunctionBreakpoint(
+		"                             # '<cexpr>' )
+
+		" RunToCursor                 # Run to Cursor vimspector#RunToCursor()
+
+		" StepOver                    # Step Over vimspector#StepOver()
+
+		" StepInto                    # Step Into vimspector#StepInto()
+
+		" StepOut                     # Step out of current function scope
+		"                             # vimspector#StepOut()
+
+		" UpFrame                     # Move up a frame in the current call
+		"                             # stack vimspector#UpFrame()
+
+		" DownFrame                   # Move down a frame in the current call
+		"                             # stack vimspector#DownFrame()
+
+		" BalloonEval                 # Evaluate expression under cursor (or
+		"                             # visual) in popup internal
+
 
 	" does't slow down
 	Plug 'jupyter-vim/jupyter-vim'
@@ -515,9 +656,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 \			}
 \		}
 
+	Plug 'fladson/vim-kitty'
 
 
-" ############################## languages #############################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ languages ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	" Plug 'rust-lang/rust.vim'
 
@@ -543,9 +685,12 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 	" Plug 'numirias/semshi' " syntax highlight for python
 
+	Plug 'dart-lang/dart-vim-plugin'
+		au FileType dart nnoremap <silent> <buffer> <leader>df :w<cr>:!dart format %<cr>
+		au FileType dart vnoremap <silent> <buffer> <leader>df :'<,'>!dart format<cr>
 
 
-" ############################## accessory #############################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ accessory ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	" does't slow down
 	Plug 'aserebryakov/vim-todo-lists'
@@ -584,6 +729,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 			noremap  <buffer> <silent> >>        :VimTodoListsIncreaseIndent<cr>
 			noremap  <buffer> <silent> <tab>     :VimTodoListsIncreaseIndent<cr>
 			noremap  <buffer> <silent> <<        :VimTodoListsDecreaseIndent<cr>
+			set nosmartindent
 		endfunction
 
 	" Чтобы в больших вайлах свёртка кода не перерасчитывалась при введение
@@ -592,64 +738,67 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'Konfekt/FastFold'
 
 
-" ############################ colorschemes ############################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ colorschemes ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	 let g:enable_italic_font = 1
 
-	 Plug 'kristijanhusak/vim-hybrid-material' " Металлический Джейкобс,           прозрачная *
-		 let g:hybrid_transparent_background = 1
-	 Plug 'sainnhe/sonokai'                    " Самурайская тема,                 прозрачная *
-	 Plug 'sainnhe/gruvbox-material'           " Джейкобс, тёплая,               непрозрачная *
-	 Plug 'whatyouhide/vim-gotham'             " Очень тёмная,                   непрозрачная *
-	 Plug 'danilo-augusto/vim-afterglow'       " Тусклая,                        непрозрачная
-	 Plug 'AlessandroYorba/Alduin'             " Алдуиновская, зеленоватая,      непрозрачная *
-		 let g:alduin_Shout_Dragon_Aspect   = 1
-	 Plug 'romainl/Apprentice'                 " Болотная,                       непрозрачная
-	 Plug 'Badacadabra/vim-archery'            " Арч, чёрный фон, тёмно-синяя,   непрозрачная
-	 Plug 'challenger-deep-theme/vim'          " Тёмная, но контраснтная,        непрозрачная *
-	 Plug 'tyrannicaltoucan/vim-deep-space'    " Космическая,                      прозрачная
-	 Plug 'ajmwagar/vim-deus'                  " Grouvbox copy,                  непрозрачная
-	 Plug 'wadackel/vim-dogrun'                " Пришельческая, сине-фиолетовая, непрозрачная *
+	Plug 'kristijanhusak/vim-hybrid-material' " Металлический Джейкобс,           прозрачная *
+	  let g:hybrid_transparent_background = 1
+	Plug 'sainnhe/sonokai'                    " Самурайская тема,                 прозрачная *
+	Plug 'sainnhe/gruvbox-material'           " Джейкобс, тёплая,               непрозрачная *
+	Plug 'whatyouhide/vim-gotham'             " Очень тёмная,                   непрозрачная *
+	Plug 'danilo-augusto/vim-afterglow'       " Тусклая,                        непрозрачная
+	Plug 'AlessandroYorba/Alduin'             " Алдуиновская, зеленоватая,      непрозрачная *
+	  let g:alduin_Shout_Dragon_Aspect   = 1
+	Plug 'romainl/Apprentice'                 " Болотная,                       непрозрачная
+	Plug 'Badacadabra/vim-archery'            " Арч, чёрный фон, тёмно-синяя,   непрозрачная
+	Plug 'challenger-deep-theme/vim'          " Тёмная, но контраснтная,        непрозрачная *
+	Plug 'tyrannicaltoucan/vim-deep-space'    " Космическая,                      прозрачная
+	Plug 'ajmwagar/vim-deus'                  " Grouvbox copy,                  непрозрачная
+	Plug 'wadackel/vim-dogrun'                " Пришельческая, сине-фиолетовая, непрозрачная *
 
-	 Plug 'chase/focuspoint-vim'               " Фермерская, зелёная,            непрозрачная
-	 Plug 'jaredgorski/fogbell.vim'            " Будто старый чёрноблеый фильм,  непрозрачная *
-	 Plug 'yorickpeterse/happy_hacking.vim'    " Простая, приятная,              непрозрачная
-	 Plug 'cocopon/iceberg.vim'                " Холодная, ледяная,              непрозрачная *
-	 Plug 'scheakur/vim-scheakur'              " Земляная,                       непрозрачная *
-	 Plug 'w0ng/vim-hybrid'                    " Чёткая, средней тёплости,       непрозрачная
-	 Plug 'nanotech/jellybeans.vim'            " Морская, с водорослями,         непрозрачная
-	 Plug 'jonathanfilip/vim-lucius'           " Серо-светлая, вечерний асфальт, непрозрачная *
-	 Plug 'dikiaap/minimalist'                 " Тёмная земля, простая,          непрозрачная *
+	Plug 'chase/focuspoint-vim'               " Фермерская, зелёная,            непрозрачная
+	Plug 'jaredgorski/fogbell.vim'            " Будто старый чёрноблеый фильм,  непрозрачная *
+	Plug 'yorickpeterse/happy_hacking.vim'    " Простая, приятная,              непрозрачная
+	Plug 'cocopon/iceberg.vim'                " Холодная, ледяная,              непрозрачная *
+	Plug 'scheakur/vim-scheakur'              " Земляная,                       непрозрачная *
+	Plug 'w0ng/vim-hybrid'                    " Чёткая, средней тёплости,       непрозрачная
+	Plug 'nanotech/jellybeans.vim'            " Морская, с водорослями,         непрозрачная
+	Plug 'jonathanfilip/vim-lucius'           " Серо-светлая, вечерний асфальт, непрозрачная *
+	Plug 'dikiaap/minimalist'                 " Тёмная земля, простая,          непрозрачная *
 
-	 Plug 'tomasr/molokai'                     " Похожа на sonokai, но темнее, непрозрачная
-	 Plug 'fmoralesc/molokayo'                 " Как molokai, но светлее,      непрозрачная
-	 Plug 'liuchengxu/space-vim-dark'          " Зеленоватая,                  непрозрачная
-	 Plug 'jaredgorski/SpaceCamp'              " Яркая, зеленоватая,           непрозрачная *
-	 Plug 'jacoborus/tender.vim'               " Приятная, жёлто-оранжевая,    непрозрачная
-	 Plug 'marcopaganini/termschool-vim-theme' " Яркая, простая,               непрозрачная
-	 Plug 'vim-scripts/twilight256.vim'        " Жёлто-зелёная, тёмная,          прозрачная *
-	 Plug 'rakr/vim-two-firewatch'             " Тёмная с кожанным оттенком,   непрозрачная *
-	 Plug 'vim-scripts/wombat256.vim'          " Постная,                      непрозрачная
-	 Plug 'arcticicestudio/nord-vim'           " Яркая,                          прозрачная
-	 Plug 'mhartington/oceanic-next'           " Крабовая,                     непрозрачная *
+	Plug 'tomasr/molokai'                     " Похожа на sonokai, но темнее, непрозрачная
+	Plug 'fmoralesc/molokayo'                 " Как molokai, но светлее,      непрозрачная
+	Plug 'liuchengxu/space-vim-dark'          " Зеленоватая,                  непрозрачная
+	Plug 'jaredgorski/SpaceCamp'              " Яркая, зеленоватая,           непрозрачная *
+	Plug 'jacoborus/tender.vim'               " Приятная, жёлто-оранжевая,    непрозрачная
+	Plug 'marcopaganini/termschool-vim-theme' " Яркая, простая,               непрозрачная
+	Plug 'vim-scripts/twilight256.vim'        " Жёлто-зелёная, тёмная,          прозрачная *
+	Plug 'rakr/vim-two-firewatch'             " Тёмная с кожанным оттенком,   непрозрачная *
+	Plug 'vim-scripts/wombat256.vim'          " Постная,                      непрозрачная
+	Plug 'arcticicestudio/nord-vim'           " Яркая,                          прозрачная
+	Plug 'mhartington/oceanic-next'           " Крабовая,                     непрозрачная *
 
-	 Plug 'glepnir/oceanic-material'           " Свежая, океаническая с крабами, непрозрачная *
-		 let g:oceanic_material_allow_bold      = 1
-		 let g:oceanic_material_allow_italic    = 1
-		 let g:oceanic_material_allow_underline = 1
-	 Plug 'rakr/vim-one'                       " Тёмная с фиолетовым, непрозрачная
-	 Plug 'joshdick/onedark.vim'               " То же, что one, но светлее и приятнее, непрозрачная
-	 Plug 'vim-scripts/rdark-terminal2.vim'    " Приятная, зелёно-голубая, прозрачная *
-	 Plug 'junegunn/seoul256.vim'              " Светлая, вебеленная, приятная, непрозрачная
-	 Plug 'AlessandroYorba/Sierra'             " Вишнявая, тёмная, приятная, непрозрачная *
-	 Plug 'sonph/onehalf'                      "\
-	 Plug 'kyoz/purify'                        "\
+	Plug 'glepnir/oceanic-material'           " Свежая, океаническая с крабами, непрозрачная *
+		let g:oceanic_material_allow_bold      = 1
+		let g:oceanic_material_allow_italic    = 1
+		let g:oceanic_material_allow_underline = 1
+	Plug 'rakr/vim-one'                       " Тёмная с фиолетовым, непрозрачная
+	Plug 'joshdick/onedark.vim'               " То же, что one, но светлее и приятнее, непрозрачная
+	Plug 'vim-scripts/rdark-terminal2.vim'    " Приятная, зелёно-голубая, прозрачная *
+	Plug 'junegunn/seoul256.vim'              " Светлая, вебеленная, приятная, непрозрачная
+	Plug 'AlessandroYorba/Sierra'             " Вишнявая, тёмная, приятная, непрозрачная *
+		let g:sierra_Twilight = 1
+		let g:sierra_Midnight = 0
+		let g:sierra_Pitch    = 0
+	Plug 'sonph/onehalf'                      "\
+	Plug 'kyoz/purify'                        "\
 
 call plug#end()
 filetype on
 
 " does't slow down
-colorscheme oceanic_material
+colorscheme rdark-terminal2
 
 
 
@@ -658,11 +807,11 @@ colorscheme oceanic_material
 
 
 
-" ######################################################################
-" ############################## MAPPINGS ##############################
-" ######################################################################
+" ########################################################################## "
+" ################################ MAPPINGS ################################ "
+" ########################################################################## "
 
-" ########################## windows and tabs ##########################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ windows and tabs ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 " Перемещение между окнами
 nnoremap H <C-w>h
@@ -707,7 +856,7 @@ nnoremap gQ :qa!<cr>
 
 
 
-" ############################## files #################################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ files ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 " make
 nnoremap <leader>b :wa<cr>:make!<cr>
@@ -751,12 +900,12 @@ nnoremap <leader>dD :!!<cr>
 
 
 
-" ######################## editing and moving ##########################
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~ editing and moving ~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
-nnoremap M J
-vnoremap M J
-nnoremap m dd
-nnoremap dd <nop>
+noremap M J
+noremap m dd
+" nnoremap dd <nop>
+nnoremap <leader>M m
 
 inoremap <C-l> <delete>
 inoremap <C-o> <esc>mqviwU`qa
@@ -777,9 +926,9 @@ inoremap <C-v> <C-v>u0301
 
 
 
-" ######################################################################
-" ############################ FILETYPES ###############################
-" ######################################################################
+" ########################################################################## "
+" ############################### FILETYPES ################################ "
+" ########################################################################## "
 
 let javaScript_fold            = 1
 let g:python_recommended_style = 0
@@ -808,22 +957,28 @@ au FileType c   syntax keyword Type byte_p ubyte_p short_p ushort_p int_p uint_p
 au FileType cpp syntax keyword Type llong_p ullong_p float_p double_p ldouble_p
 au FileType c   syntax keyword Type llong_p ullong_p float_p double_p ldouble_p
 au FileType cpp syntax keyword Type llong_p ullong_p float_p double_p ldouble_p
-au FileType c   nnoremap <silent> <buffer> <leader>v :!gcc -fsyntax-only %<cr>
-au FileType cpp nnoremap <silent> <buffer> <leader>v :!g++ -fsyntax-only %<cr>
+" au FileType c   nnoremap <silent> <buffer> <leader>v :!gcc -fsyntax-only %<cr>
+" au FileType cpp nnoremap <silent> <buffer> <leader>v :!g++ -fsyntax-only %<cr>
 
 " PYTHON
-au FileType python setlocal foldmethod=indent
+au FileType python setlocal foldmethod=indent tabstop=2 shiftwidth=2 expandtab
 au FileType python nnoremap <silent> <buffer> <leader>r :wa<cr>:!python3 main.py<cr>
 au FileType python nnoremap <silent> <buffer> <leader>i :wa<cr>:!python3 main.py < input<cr>
 
-" VIM, HTML, XML, JSON
+" BASH
+au FileType sh setlocal foldmethod=indent tabstop=2 shiftwidth=2 expandtab
+
+" VIM, HTML, XML, JSON, SH
 au FileType vim        nnoremap <leader>e :exec getline('.')<cr>
 au FileType vim        vnoremap <leader>e :<c-u>exec join(getline("'<", "'>"), "\n")<cr>
 au FileType vim        setlocal foldmethod=indent tabstop=2 shiftwidth=2
+au FileType sh         nnoremap <leader>e :!zsh -c shellescape(getline('.'))<cr>
+au FileType sh         vnoremap <leader>e :<c-u>!zsh -c shellescape(join(getline("'<", "'>"), "\n"))<cr>
 au FileType html       setlocal foldmethod=indent tabstop=2 shiftwidth=2
 au FileType htmldjango setlocal foldmethod=indent tabstop=2 shiftwidth=2
 au FileType xml        setlocal foldmethod=indent tabstop=2 shiftwidth=2
 au FileType json       setlocal foldmethod=indent tabstop=2 shiftwidth=2
+au FileType dart       setlocal tabstop=2 shiftwidth=2 expandtab
 
 " RUST
 au FileType rust nnoremap <silent> <buffer> <leader>r :wa<cr>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo run<cr>
@@ -832,7 +987,7 @@ au FileType rust nnoremap <silent> <buffer> <leader>i :wa<cr>:!RUSTFLAGS="$RUSTF
 au FileType rust nnoremap <silent> <buffer> <leader>b :wa<cr>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo build<cr>
 au FileType rust nnoremap <silent> <buffer> <leader>B :wa<cr>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo build --release<cr>
 au FileType rust nnoremap <silent> <buffer> <leader>p :wa<cr>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo clean<cr>
-au FileType rust nnoremap <silent> <buffer> <leader>v :wa<cr>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo check<cr>
+" au FileType rust nnoremap <silent> <buffer> <leader>v :wa<cr>:!RUSTFLAGS="$RUSTFLAGS -A dead_code" cargo check<cr>
 au FileType rust let g:AutoPairs = { "[" : "]", '"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''" }
 au FileType rust compiler! cargo
 
@@ -842,9 +997,9 @@ au FileType rust compiler! cargo
 
 
 
-" ######################################################################
-" ############################ NORMAL MODE #############################
-" ######################################################################
+" ########################################################################## "
+" ############################## NORMAL MODE ############################### "
+" ########################################################################## "
 
 " !      # вызов фильтра
 " @      # исполнить макрос
@@ -1092,14 +1247,14 @@ au FileType rust compiler! cargo
 " <leader>Y REMAP
 " <leader>u REMAP
 " <leader>U REMAP
-" <leader>i US make run < input; rust: run < input, py: !python3 main.py < input
+" <leader>i make run < input; rust: run < input, py: !python3 main.py < input
 " <leader>I REMAP
-" <leader>o US py: JupyterRunFile
+" <leader>o py: JupyterRunFile
 " <leader>O REMAP
-" <leader>p US make clean; rust: cargo clean
-" <leader>P REMAP
+" <leader>p make clean; rust: cargo clean
+" <leader>P Toggle auto pairs
 " <leader>a REMAP
-" <leader>A Toggle auto-pairs
+" <leader>A REMAP
 " <leader>s easy-motion
 " <leader>S REMAP
 " <leader>d Разнообразные операции
@@ -1141,8 +1296,8 @@ au FileType rust compiler! cargo
 " <leader>K REMAP
 " <leader>l REMAP
 " <leader>L REMAP
-" <leader>z REMAP
-" <leader>Z REMAP
+" <leader>z Goyo
+" <leader>Z double Goyo (Goyo refresh)
 " <leader>x py: Ju run cell
 " <leader>X REMAP
 " <leader>c
@@ -1155,7 +1310,20 @@ au FileType rust compiler! cargo
 "           a       -> change comment style // -> /* */
 "
 " <leader>C JupyterConnect (ft=py)
-" <leader>v check (ft=rust,c,cpp)
+" <leader>v (VimSpector)
+" 					v -> launch
+" 					p -> pause
+" 					s -> stop
+" 					r -> restart
+" 					t -> toggle breakpoint
+" 					T -> toggle conditional breakpoint
+" 					c -> run to cursor
+" 					o -> step over
+" 					i -> step into
+" 					O -> step out of current function
+" 					u -> move up a frame in the current call stack
+" 					d -> move down a frame
+" 					e -> evaluate expression under cursor into popup
 " <leader>V REMAP
 " <leader>b build
 " <leader>B rebuild
@@ -1282,14 +1450,14 @@ au FileType rust compiler! cargo
 " \U non-uppercase character:    [^A-Z]        */\U*
 
 " " classes of characters
-" \i	identifier characters		'isident'
-" \I	like \i, excluding digits
-" \k	keyword characters			'iskeyword'
-" \K	like \k, excluding digits
-" \p	printable characters		'isprint'
-" \P	like \p, excluding digits
-" \f	file name characters		'isfname'
-" \F	like \f, excluding digits
+" \i  identifier characters   'isident'
+" \I  like \i, excluding digits
+" \k  keyword characters      'iskeyword'
+" \K  like \k, excluding digits
+" \p  printable characters    'isprint'
+" \P  like \p, excluding digits
+" \f  file name characters    'isfname'
+" \F  like \f, excluding digits
 
 
 
