@@ -18,14 +18,14 @@ font pango:DejaVu Sans Mono 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
 # Анимации и вертикальная синхронизация
-exec compton -f --vsync drm
+exec --no-startup-id compton -f --vsync drm
 
 # Показывать всплывающие окна во время полноэкранного режима
 popup_during_fullscreen smart
@@ -96,11 +96,10 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Multimedia ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute      exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindsym XF86MonBrightnessUp   exec light +
 bindsym XF86MonBrightnessDown exec light -
 
@@ -144,10 +143,10 @@ bindsym $mod+o workspace  back_and_forth
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Launch application ~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
 # one-press launch
-bindsym $mod+comma   exec term
-bindsym Ctrl+$alt+a  exec flameshot gui
-bindsym $mod+x       exec tpdtgl
-bindsym $mod+Shift+x exec xkill
+bindsym  $mod+comma   exec term
+bindsym  $mod+m       exec firefox
+bindsym  Ctrl+$alt+a  exec flameshot gui
+bindsym  $mod+x       exec tpdtgl
 
 # a - android-studio
 # b - baobab
@@ -291,6 +290,9 @@ bindsym $mod+Shift+f   exec rofi -show combi
 default_border pixel 1
 default_floating_border none
 gaps inner 20
+workspace $ws8 gaps inner      60
+workspace $ws8 gaps horizontal 110
+workspace $ws8 gaps vertical   60
 title_align center
 
 # Цвета
@@ -303,7 +305,7 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 # background
-exec feh --bg-scale ~/"imgs/Рабочий стол/Аниме/Кошкодевочка под дождём, фиолетовый.jpg"
+exec --no-startup-id feh --bg-scale ~/"imgs/Рабочий стол/Аниме/Кошкодевочка под дождём, фиолетовый.jpg"
 
 
 
@@ -313,12 +315,12 @@ exec feh --bg-scale ~/"imgs/Рабочий стол/Аниме/Кошкодев�
 # ~~~~~                             OTHER                              ~~~~~ #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec_always --no-startup-id ~/.config/conky/launch.sh
-exec clipit
-exec qstardict
-exec megasync
-exec gpick
+exec_always    --no-startup-id ~/.config/polybar/launch.sh
+exec_always    --no-startup-id ~/.config/conky/launch.sh
+exec clipit    --no-startup-id
+exec qstardict --no-startup-id
+exec megasync  --no-startup-id
+exec gpick     --no-startup-id
 
 
 
