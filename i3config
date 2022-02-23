@@ -5,27 +5,6 @@
 set $mod Mod4
 set $alt Mod1
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-# font pango:monospace 8
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-# exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
-
-# Анимации и вертикальная синхронизация
-exec --no-startup-id compton -f --vsync drm
 
 # Показывать всплывающие окна во время полноэкранного режима
 popup_during_fullscreen smart
@@ -38,8 +17,6 @@ show_marks yes
 
 
 
-
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 # ~~~~~                           WORKSPACES                           ~~~~~ #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
@@ -49,7 +26,7 @@ show_marks yes
 workspace_auto_back_and_forth yes
 
 # Открытие новы окон по умолчанию
-workspace_layout stacking
+workspace_layout tabbed
 
 set $ws1  "1:Master"
 set $ws2  "2:Extra"
@@ -96,12 +73,12 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Multimedia ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioMicMute      exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86MonBrightnessUp   exec light +
-bindsym XF86MonBrightnessDown exec light -
+bindsym XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute         exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute      exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessUp   exec --no-startup-id light +
+bindsym XF86MonBrightnessDown exec --no-startup-id light -
 
 
 
@@ -143,10 +120,12 @@ bindsym $mod+o workspace  back_and_forth
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~ Launch application ~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
 # one-press launch
-bindsym  $mod+comma   exec term
-bindsym  $mod+m       exec firefox
-bindsym  Ctrl+$alt+a  exec flameshot gui
-bindsym  $mod+x       exec tpdtgl
+bindsym           $mod+comma   exec --no-startup-id term
+bindsym           $mod+m       exec --no-startup-id firefox
+bindsym           Ctrl+$alt+a  exec --no-startup-id flameshot gui
+bindsym           $mod+x       exec --no-startup-id tpdtgl
+bindsym --release $mod+p       exec --no-startup-id gpick -s
+bindsym           $mod+u       exec --no-startup-id systemctl suspend
 
 # a - android-studio
 # b - baobab
@@ -178,38 +157,38 @@ bindsym  $mod+x       exec tpdtgl
 bindsym $mod+d mode "launch"
 
 mode "launch" {
-	bindsym $mod+a       exec android-studio
-	bindsym a            exec android-studio
+	bindsym $mod+a       exec --no-startup-id android-studio
+	bindsym a            exec --no-startup-id android-studio
 
-	bindsym $mod+b       exec baobab
-	bindsym b            exec baobab
+	bindsym $mod+b       exec --no-startup-id baobab
+	bindsym b            exec --no-startup-id baobab
 
-	bindsym $mod+c       exec gnome-system-monitor
-	bindsym c            exec gnome-system-monitor
+	bindsym $mod+c       exec --no-startup-id gnome-system-monitor
+	bindsym c            exec --no-startup-id gnome-system-monitor
 
-	bindsym $mod+f       exec firefox
-	bindsym f            exec firefox
+	bindsym $mod+f       exec --no-startup-id firefox
+	bindsym f            exec --no-startup-id firefox
 
-	bindsym $mod+g       exec firefox https://www.desmos.com/calculator?lang=ru
-	bindsym g            exec firefox https://www.desmos.com/calculator?lang=ru
+	bindsym $mod+g       exec --no-startup-id firefox https://www.desmos.com/calculator?lang=ru
+	bindsym g            exec --no-startup-id firefox https://www.desmos.com/calculator?lang=ru
 
-	bindsym $mod+n       exec nemo
-	bindsym n            exec nemo
+	bindsym $mod+n       exec --no-startup-id nemo
+	bindsym n            exec --no-startup-id nemo
 
-	bindsym $mod+o       exec obsidian
-	bindsym o            exec obsidian
+	bindsym $mod+o       exec --no-startup-id obsidian
+	bindsym o            exec --no-startup-id obsidian
 
-	bindsym $mod+q       exec qbittorrent
-	bindsym q            exec qbittorrent
+	bindsym $mod+q       exec --no-startup-id qbittorrent
+	bindsym q            exec --no-startup-id qbittorrent
 
-	bindsym $mod+t       exec term
-	bindsym t            exec term
+	bindsym $mod+t       exec --no-startup-id term
+	bindsym t            exec --no-startup-id term
 
-	bindsym u            exec telega
-	bindsym $mod+u       exec telega
+	bindsym u            exec --no-startup-id telega
+	bindsym $mod+u       exec --no-startup-id telega
 
-	bindsym w            exec libreoffice --writer
-	bindsym $mod+w       exec libreoffice --writer
+	bindsym w            exec --no-startup-id libreoffice --writer
+	bindsym $mod+w       exec --no-startup-id libreoffice --writer
 
 	bindsym Escape mode "default"
 }
@@ -223,29 +202,35 @@ bindsym $mod+Shift+s move       scratchpad
 bindsym $mod+Shift+d scratchpad show
 
 mode "focus" {
-	bindsym a      [class="(?i)android.*"]   focus; mode "default"
-	bindsym $mod+a [class="(?i)android.*"]   focus; mode "default"
+	bindsym a            [class="(?i)android.*"]   focus; mode "default"
+	bindsym $mod+a       [class="(?i)android.*"]   focus; mode "default"
 
-	bindsym f      [class="(?i)firefox"]     focus; mode "default"
-	bindsym $mod+f [class="(?i)firefox"]     focus; mode "default"
+	bindsym c            [class="(?i).*monitor.*"] focus; mode "default"
+	bindsym $mod+c       [class="(?i).*monitor.*"] focus; mode "default"
 
-	bindsym q      [class="(?i)qbittorrent"] focus; mode "default"
-	bindsym $mod+q [class="(?i)qbittorrent"] focus; mode "default"
+	bindsym f            [class="(?i)firefox"]     focus; mode "default"
+	bindsym $mod+f       [class="(?i)firefox"]     focus; mode "default"
 
-	bindsym r      [class="(?i)xreader"]     focus; mode "default"
-	bindsym $mod+r [class="(?i)xreader"]     focus; mode "default"
+	bindsym o            [class="(?i)obsidian"]    focus; mode "default"
+	bindsym $mod+o       [class="(?i)obsidian"]    focus; mode "default"
 
-	bindsym t      [class="(?i)term"]        focus; mode "default"
-	bindsym $mod+t [class="(?i)term"]        focus; mode "default"
+	bindsym q            [class="(?i)qbittorrent"] focus; mode "default"
+	bindsym $mod+q       [class="(?i)qbittorrent"] focus; mode "default"
 
-	bindsym u      [class="(?i)telegram.*"]  focus; mode "default"
-	bindsym $mod+u [class="(?i)telegram.*"]  focus; mode "default"
+	bindsym r            [class="(?i)xreader"]     focus; mode "default"
+	bindsym $mod+r       [class="(?i)xreader"]     focus; mode "default"
 
-	bindsym v      [class="(?i)vlc"]         focus; mode "default"
-	bindsym $mod+v [class="(?i)vlc"]         focus; mode "default"
+	bindsym t            [class="(?i)term"]        focus; mode "default"
+	bindsym $mod+t       [class="(?i)term"]        focus; mode "default"
 
-	bindsym c      [class="(?i).*monitor.*"] focus; mode "default"
-	bindsym $mod+c [class="(?i).*monitor.*"] focus; mode "default"
+	bindsym u            [class="(?i)telegram.*"]  focus; mode "default"
+	bindsym $mod+u       [class="(?i)telegram.*"]  focus; mode "default"
+
+	bindsym Shift+u      [urgent=latest]           focus; mode "default"
+	bindsym $mod+Shift+u [urgent=latest]           focus; mode "default"
+
+	bindsym v            [class="(?i)vlc"]         focus; mode "default"
+	bindsym $mod+v       [class="(?i)vlc"]         focus; mode "default"
 
 	bindsym Escape mode "default"
 }
@@ -273,31 +258,32 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+q exit
 
 bindsym $mod+q         kill
-bindsym $mod+semicolon exec rofi -show run
-bindsym $mod+Shift+w   exec rofi -show window
-bindsym $mod+Shift+e   exec rofi -show windowcd
-bindsym $mod+Shift+c   exec rofi -show combi
-bindsym $mod+Shift+f   exec rofi -show combi
+bindsym $mod+semicolon exec --no-startup-id rofi -matching fuzzy -sort -show run
+bindsym $mod+Shift+w   exec --no-startup-id rofi -matching fuzzy -sort -show window
+bindsym $mod+Shift+e   exec --no-startup-id rofi -matching fuzzy -sort -show windowcd
+bindsym $mod+Shift+c   exec --no-startup-id rofi -matching fuzzy -sort -show combi
 
 
 
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-# ~~~~~                           APPERANCE                            ~~~~~ #
+# ~~~~~                           APPEARANCE                           ~~~~~ #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-default_border pixel 1
+font                    pango:Jet Brains 8
+title_align             center
+default_border          pixel 1
 default_floating_border none
+smart_borders           on
+hide_edge_borders       none
 gaps inner 20
-workspace $ws8 gaps inner      60
-workspace $ws8 gaps horizontal 110
-workspace $ws8 gaps vertical   60
-title_align center
+workspace $ws8 gaps outer 30
+workspace $ws8 gaps inner 80
 
 # Цвета
 # class                 border  backgr. text    indicator child_border
-client.focused          #4D1F5C #4A1A57 #D9D9D9 #2E9EF4   #aaaaaa
+client.focused          #2B013A #391C43 #D9D9D9 #2E9EF4   #aaaaaa
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
 client.unfocused        #333333 #222222 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
@@ -312,15 +298,18 @@ exec --no-startup-id feh --bg-scale ~/"imgs/Рабочий стол/Аниме/�
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
-# ~~~~~                             OTHER                              ~~~~~ #
+# ~~~~~                            AUTOLOAD                            ~~~~~ #
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 
-exec_always    --no-startup-id ~/.config/polybar/launch.sh
-exec_always    --no-startup-id ~/.config/conky/launch.sh
-exec clipit    --no-startup-id
-exec qstardict --no-startup-id
-exec megasync  --no-startup-id
-exec gpick     --no-startup-id
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id ~/.config/conky/launch.sh
+exec        --no-startup-id clipit
+exec        --no-startup-id megasync
+exec        --no-startup-id qstardict
+exec        --no-startup-id xss-lock lock
+exec        --no-startup-id nm-applet
+exec        --no-startup-id compton -f --inactive-opacity 1.0 --active-opacity \
+                                    1.0 --use-damage --vsync --inactive-dim 0.1
 
 
 

@@ -75,6 +75,14 @@ if has('macunix')
 	let g:python3_host_prog = '/usr/local/bin/python3'
 endif
 
+if exists('$TMUX')
+	let &t_SI .= "\ePtmux;\e\e[=1c\e\\"
+	let &t_EI .= "\ePtmux;\e\e[=2c\e\\"
+else
+	let &t_SI .= "\e[=1c"
+	let &t_EI .= "\e[=2c"
+endif
+
 
 
 
@@ -180,7 +188,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	" does't slow down
 	Plug 'scrooloose/nerdtree' " просмотр файловой системы
 			map <C-n> :NERDTreeToggle<cr>
-			let NERDTreeIgnore=['\~$', 'target', 'trg', '*.o']
+			let NERDTreeIgnore=['\~$', 'target', 'trg', '*.o', 'build', '__pycache__']
 			let g:NERDSpaceDelims     = 2
 			let g:NERDTreeAutoCenter  = 0
 			let g:NERDTreeMinimalMenu = 1
@@ -243,7 +251,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		let g:rainbow_conf = {
 	\		'separately': {
 	\			'html':     0,
-	\			'nerdtree': 0
+	\			'nerdtree': 0,
+	\     'cmake':    0
 	\		}
 	\	}
 
@@ -268,8 +277,8 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		let g:goyo_width  = 83
 		let g:goyo_linenr = 1
 		let g:goyo_height = '93%'
-		nnoremap <leader>z :Goyo<cr>
-		nnoremap <leader>Z :Goyo<cr>:Goyo<cr>
+		nnoremap <leader>z :Goyo<cr>0
+		nnoremap <leader>Z :Goyo<cr>:Goyo<cr>0
 
 		fun! s:goyo_enter()
 			hi EndOfBuffer ctermfg=236
@@ -445,7 +454,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 		let g:fzf_source = 'find . -type f -not -path "*.git/*" ' .
-		                 \ '-not -name "*.[oda]" -not -name "main" | ' .
+		                 \ '-not -path "./build/*" '              .
+										 \ '-not -path "*/__pycache__/*" '      .
+										 \ '-not -name "*.[oda]" '                .
+										 \ '-not -name "main" | '                 .
 		                 \ 'sed -e "s/\.\///" | sort -nr'
 
 		let g:fzf_options = {
@@ -490,6 +502,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	" does't slow down
 	Plug 'tikhomirov/vim-glsl' " Подсветка синтаксиса для GLSL
 		autocmd! BufNewFile,BufRead *.vs,*.fs,*.frag set ft=glsl
+
+	Plug 'Fymyte/rasi.vim'  " Syntax hightlight for rasi (rofi) files
+	Plug 'elkowar/yuck.vim' " Syntax hightlight for yack (eww) files
 
 	packadd! vimspector
 
@@ -750,9 +765,9 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'danilo-augusto/vim-afterglow'       " Тусклая,                        непрозрачная
 	Plug 'AlessandroYorba/Alduin'             " Алдуиновская, зеленоватая,      непрозрачная *
 	  let g:alduin_Shout_Dragon_Aspect   = 1
-	Plug 'romainl/Apprentice'                 " Болотная,                       непрозрачная
+	Plug 'romainl/Apprentice'                 " Болотная,                       непрозрачная *
 	Plug 'Badacadabra/vim-archery'            " Арч, чёрный фон, тёмно-синяя,   непрозрачная
-	Plug 'challenger-deep-theme/vim'          " Тёмная, но контраснтная,        непрозрачная *
+	" Plug 'challenger-deep-theme/vim'          " Тёмная, но контраснтная,        непрозрачная *
 	Plug 'tyrannicaltoucan/vim-deep-space'    " Космическая,                      прозрачная
 	Plug 'ajmwagar/vim-deus'                  " Grouvbox copy,                  непрозрачная
 	Plug 'wadackel/vim-dogrun'                " Пришельческая, сине-фиолетовая, непрозрачная *
@@ -794,11 +809,13 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'sonph/onehalf'                      "\
 	Plug 'kyoz/purify'                        "\
 
+	Plug 'dracula/vim'
+
 call plug#end()
 filetype on
 
-" does't slow down
-colorscheme rdark-terminal2
+" colorscheme rdark-terminal2
+colorscheme sonokai
 
 
 
@@ -895,7 +912,6 @@ nnoremap <leader>dv :e $vimrc<cr>
 nnoremap <leader>dV :tabnew $vimrc<cr>
 nnoremap <leader>dR :source $vimrc<cr>
 nnoremap <leader>dS :source .open.vim<cr>
-nnoremap <leader>dd @:<cr>
 nnoremap <leader>dD :!!<cr>
 
 

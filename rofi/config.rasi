@@ -1,0 +1,28 @@
+configuration {
+	modi: "window,run,windowcd,combi,file-browser";
+
+	/* location */
+	location: 0;
+	padding: 5;
+	yoffset: 0;
+	xoffset: 0;
+	width: 50;
+	lines: 15;
+	columns: 1;
+
+	font: "DejaVuSansMono 10";
+	bw: 2;
+	fixed-num-lines: true;
+	show-icons: false;
+
+    /*  name        'bg',     'fg',  'bgalt',  'hlbg',  'hlfg' */
+	color-normal: "#282a2e, #bbbbbb, #3c424d, #9720c1, #ffffff";
+	color-urgent: "#282a2e, #bbbbbb, #3c424d, #9720c1, #ffffff";
+	color-active: "#282a2e, #bbbbbb, #3c424d, #9720c1, #ffffff";
+	color-window: "#282a2e, #3c424d, #3c424d";
+
+	/* run command */
+	run-command: "{cmd}";
+	run-list-command: "";
+	run-shell-command: "{terminal} -e {cmd}";
+}

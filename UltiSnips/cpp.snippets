@@ -15,7 +15,7 @@ extends c-types
 # -----------------------------------------------
 # directives
 
-snippet usn
+snippet "usn " "namespace" brA
 using namespace ${1:std};$0
 endsnippet
 # --------
@@ -230,13 +230,13 @@ endsnippet
 
 snippet hourseoff
 static constexpr PointI const OFFSET[8] = {
-	{ 1, 2 },
-	{ 1, -2 },
-	{ -1, 2 },
+	{ 1,  2  },
+	{ 1,  -2 },
+	{ -1, 2  },
 	{ -1, -2 },
-	{ 2, 1 },
-	{ 2, -1 },
-	{ -2, 1 },
+	{ 2,  1  },
+	{ 2,  -1 },
+	{ -2, 1  },
 	{ -2, -1 }
 };
 endsnippet
