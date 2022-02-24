@@ -99,7 +99,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ autocomplete ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ "
 
 	" does't slow down
-	if !has('macunix')
+	" if !has('macunix')
 		Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 		" TextEdit might fail if hidden is not set.
@@ -167,7 +167,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 				execute '!' . &keywordprg . " " . expand('<cword>')
 			endif
 		endfunction
-	endif
+	" endif
 
 	" Plug 'neovim/nvim-lspconfig'
 
@@ -240,9 +240,11 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 		 nnoremap <leader>tt :TabberSelectLastActive<cr>
 
 	" does't slow down
-	Plug 'ryanoasis/vim-devicons'
-		 set guifont=DroidSansMono\ Nerd\ Font\ 10
-		 let g:airline_powerline_fonts = 1
+	if !has('macunix')
+		Plug 'ryanoasis/vim-devicons'
+			 set guifont=DroidSansMono\ Nerd\ Font\ 10
+			 let g:airline_powerline_fonts = 1
+	 endif
 
 	" " Разноцветная подсветка скобок
 	" does't slow down
@@ -506,7 +508,10 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 	Plug 'Fymyte/rasi.vim'  " Syntax hightlight for rasi (rofi) files
 	Plug 'elkowar/yuck.vim' " Syntax hightlight for yack (eww) files
 
-	packadd! vimspector
+	let g:python3_host_prog = '/usr/local/bin/python3'
+
+	if !has('macunix')
+		packadd! vimspector
 
 		fun! AddVimspectorMappings()
 			nnoremap q :call VimspectorReset()<cr>
@@ -611,6 +616,7 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 		" BalloonEval                 # Evaluate expression under cursor (or
 		"                             # visual) in popup internal
+	endif
 
 
 	" does't slow down
@@ -680,13 +686,15 @@ call plug#begin('~/.config/nvim/autoload/plugged')
 
 	" SCHOOL 21
 	" does't slow down
-	Plug 'cacharle/c_formatter_42.vim'
-		au FileType           c   nnoremap <silent> <buffer> <leader>dn :w<cr>:Norminette<cr>
-		au FileType           c   nnoremap <silent> <buffer> <leader>df :CFormatter42<cr>:w<cr>
-		au FileType           c   vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<cr>
-		au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>dn :w<cr>:NorminetteHeader<cr>
-		au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>df :CFormatter42<cr>:w<cr>
-		au BufNewFile,BufRead *.h vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<cr>
+	if !has('macunix')
+		Plug 'cacharle/c_formatter_42.vim'
+			au FileType           c   nnoremap <silent> <buffer> <leader>dn :w<cr>:Norminette<cr>
+			au FileType           c   nnoremap <silent> <buffer> <leader>df :CFormatter42<cr>:w<cr>
+			au FileType           c   vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<cr>
+			au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>dn :w<cr>:NorminetteHeader<cr>
+			au BufNewFile,BufRead *.h nnoremap <silent> <buffer> <leader>df :CFormatter42<cr>:w<cr>
+			au BufNewFile,BufRead *.h vnoremap <silent> <buffer> <leader>df :'<,'>!c_formatter_42<cr>
+	endif
 
 	" does't slow down
 	Plug 'pbondoer/vim-42header'

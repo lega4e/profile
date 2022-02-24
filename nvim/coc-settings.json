@@ -1,0 +1,14 @@
+{
+	"languageserver":
+	{
+		"clangd":
+		{
+			"command":      "clangd",
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+			"filetypes":    ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+		}
+	},
+	"suggest.maxCompleteItemCount": 25,
+	"suggest.maxPreviewWidth":      60,
+  "diagnostic.enable":            false
+}
